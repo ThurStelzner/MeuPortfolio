@@ -9,7 +9,28 @@
     <title>Portfólio - Arthur Stelzner</title>
 </head>
 <body>
-    <aside>
+    <nav class="navbar navbar-dark bg-dark d-lg-none fixed-top">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Arthur I. Stelzner</span>
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-list"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#" data-bs-dismiss="dropdown">Início</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#projetos" data-bs-dismiss="dropdown">Projetos</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#habilidades" data-bs-dismiss="dropdown">Habilidades</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#sobremim" data-bs-dismiss="dropdown">Sobre Mim</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#contatos" data-bs-dismiss="dropdown">Contatos</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <aside class="d-none d-lg-block">
         <nav>
             <img src="style/foto2.jpg" alt="Minha Foto">
             <h3>Arthur I. Stelzner</h3>
@@ -54,7 +75,7 @@
         </div>
         <div class="habilidades text-center" id="habilidades">
             <h2>Minhas Habilidades</h2>
-            <div class="hcont row row-cols-1 row-cols-sm-2 row-cols-md-3">
+            <div class="hcont row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center">
                 <div class="hcard col clickable-card" data-bs-toggle="modal" data-bs-target="#modalphp">
                     <img src="style/Icon-PHP.png" alt="Icone PHP">
                     <h5>PHP</h5>
