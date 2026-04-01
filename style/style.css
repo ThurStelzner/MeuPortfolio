@@ -1,0 +1,233 @@
+:root {
+    --gray: #313638;
+    --shadow-gray: #1E1E24;
+    --soft-blue: #8E94F2;
+    --power-blue: #A0B9C6;
+    --mint-blue: #E6EFE9;
+}
+
+body {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--shadow-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--soft-blue);
+}
+
+aside {
+    background-color: var(--shadow-gray);
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+}
+
+main {
+    background-color: var(--gray);
+    grid-column: 2 / -1;
+    grid-row: 1 / 2;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    color: var(--mint-blue);
+    cursor: default;
+}
+
+section {
+    grid-column: 2 / -1;
+    grid-row: 2 / 4;
+    margin: 50px;
+}
+
+section img {
+    width: 100px;
+    height: 100px;
+}
+
+footer {
+    grid-column: 1 / -1;
+    grid-row: 4 / 5;
+    height: 40vh;
+    background-color: var(--gray);
+    color: var(--mint-blue);
+    cursor: default;
+}
+
+footer li {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    width: 130px;
+    height: 35px;
+    border: 1px solid var(--mint-blue);
+    border-radius: 50px;
+}
+
+footer a {
+    color: var(--mint-blue);
+    margin-left: 20%;
+    transition: all 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--power-blue);
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+nav {
+    padding: 20px;
+}
+
+nav a {
+    color: var(--mint-blue);
+    transition: all 0.3s ease;
+}
+
+nav ul {
+    position: fixed;
+}
+
+nav li {
+    padding-top: 10px;
+}
+
+nav h3 {
+    color: var(--mint-blue);
+    font-size: 27px;
+}
+
+nav img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid var(--soft-blue);
+}
+
+nav a:hover {
+    color: var(--power-blue);
+}
+
+a {
+    text-decoration: none;
+}
+
+main .btn-ctt {
+    width: 150px;
+    margin-top: 20px;
+}
+
+.btn {
+    border: none !important;
+    color: var(--shadow-gray);
+    background-color: var(--mint-blue);
+}
+
+.btn-ctt:hover {
+    color: var(--mint-blue);
+    background-color: var(--soft-blue);
+}
+
+.btn-ctt:active {
+    background-color: var(--power-blue) !important;
+}
+
+.card {
+    color: var(--mint-blue);
+    background-color: var(--gray);
+    margin-top: 30px;
+    width: 650px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: default;
+    transition: all 0.2s ease-in;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.hcard {
+    color: var(--mint-blue);
+    background-color: var(--gray);
+    margin: 15px;
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.hcard h5 {
+    transition: all 0.3s ease;
+}
+
+.hcard:hover {
+    transform: scale(1.05);
+}
+
+.hcard h5:hover {
+    color: var(--soft-blue);
+}
+
+.card .btn-ctt{
+    width: 100px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.projetos {
+    height: 100vh;
+}
+
+.habilidades {
+    height: 100vh;
+    margin: 50px;
+}
+
+.hcont {
+    margin-top: 100px;
+}
+
+.sobre-mim {
+    height: 100vh;
+    padding-top: 25%;
+    cursor: default;
+}
+
+.contatos {
+    margin-top: 5%;
+    width: 100%;
+}
+
+.progress-bar, .progress {
+    height: 5px;
+}
+
+.progress-bar {
+    background-color: var(--soft-blue);
+}
+
+.progress {
+    background-color: var(--shadow-gray);
+}
