@@ -283,9 +283,3 @@ main .btn-ctt {
         height: max-content;
     }
 }
-
-@media (max-width: 460px) {
-    .habilidades {
-        height: max-content;
-    }
-}
