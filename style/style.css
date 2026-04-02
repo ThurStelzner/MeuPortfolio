@@ -278,6 +278,10 @@ main .btn-ctt {
     .dropdown-menu {
         background-color: var(--mint-blue);
     }
+
+    .projetos {
+        height: max-content;
+    }
 }
 
 @media (max-width: 460px) {
