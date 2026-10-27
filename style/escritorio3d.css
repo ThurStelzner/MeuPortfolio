@@ -1,0 +1,127 @@
+:root {
+    --bg-deep: #150f0b;
+    --cream: #f4ede0;
+    --brass: #d9a441;
+    --brass-light: #e8be69;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--cream);
+    background:
+        radial-gradient(120% 90% at 50% 26%, #4d3827 0%, #2d2017 46%, var(--bg-deep) 100%);
+    overflow: hidden;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.office3d {
+    position: fixed;
+    inset: 0;
+}
+
+.office3d__canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 1.1s cubic-bezier(.2, .8, .2, 1), transform 1.4s cubic-bezier(.2, .8, .2, 1);
+    touch-action: pan-y;
+}
+
+body.is-ready .office3d__canvas {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.loader {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 16px;
+    text-align: center;
+    background:
+        radial-gradient(120% 90% at 50% 26%, #4d3827 0%, #2d2017 46%, var(--bg-deep) 100%);
+    transition: opacity .8s ease .15s, visibility 0s linear .95s;
+}
+
+body.is-ready .loader {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader__badge {
+    display: grid;
+    place-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid rgba(217, 164, 65, .55);
+    color: var(--brass-light);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-indent: .18em;
+    box-shadow: 0 0 0 6px rgba(217, 164, 65, .07), 0 8px 24px rgba(0, 0, 0, .35);
+}
+
+.loader__text {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(244, 237, 224, .55);
+}
+
+.loader__bar {
+    width: 216px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(244, 237, 224, .14);
+    overflow: hidden;
+}
+
+.loader__fill {
+    display: block;
+    width: 0%;
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #c8943c, var(--brass-light));
+    transition: width .25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .office3d__canvas,
+    .loader,
+    .loader__fill {
+        transition: none;
+    }
+
+    .office3d__canvas {
+        transform: none;
+    }
+}

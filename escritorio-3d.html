@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Escritório 3D interativo de Arthur Iantas Stelzner — desenvolvedor em formação.">
+    <link rel="icon" href="style/icon-portfolio.svg">
+    <link rel="stylesheet" href="style/escritorio3d.css">
+    <title>Escritório 3D — Arthur I. Stelzner</title>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "./script/vendor/three.module.js",
+            "three/addons/": "./script/vendor/jsm/"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <main class="office3d">
+        <h1 class="sr-only">Arthur Iantas Stelzner — Portfólio</h1>
+
+        <canvas class="office3d__canvas" id="office-canvas" aria-label="Escritório 3D interativo"></canvas>
+
+        <div class="loader" id="loader" role="status" aria-live="polite">
+            <div class="loader__badge">AIS</div>
+            <p class="loader__text">montando o escritório</p>
+            <div class="loader__bar"><span class="loader__fill" id="loader-fill"></span></div>
+        </div>
+    </main>
+
+    <script type="module" src="script/escritorio3d.js"></script>
+</body>
+
+</html>
