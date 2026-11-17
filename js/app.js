@@ -26,6 +26,16 @@
   const caseStack = document.getElementById('case-stack');
   const caseLink = document.getElementById('case-link');
 
+  const experienceDetailOverlay = document.getElementById('experiencia-detalhe');
+  const experienceKicker = document.getElementById('experiencia-kicker');
+  const experienceTitle = document.getElementById('experiencia-titulo');
+  const experienceRole = document.getElementById('experiencia-role');
+  const experienceLead = document.getElementById('experiencia-lead');
+  const experienceText = document.getElementById('experiencia-texto');
+  const experienceMeta = document.getElementById('experiencia-meta');
+  const experiencePhotos = document.getElementById('experiencia-fotos');
+  const experiencePhotoGrid = document.getElementById('experiencia-foto-grid');
+
   const desktopQuery = window.matchMedia('(min-width: 768px)');
   const hoverQuery = window.matchMedia('(hover: hover)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -65,13 +75,69 @@
     }
   };
 
+  /* ======================================================================
+     EXPERIÊNCIAS — edite aqui o texto de cada tela "Veja mais".
+
+     - lead: frase de abertura (aparece maior)
+     - text: um item por parágrafo
+     - meta: pares de rótulo + valor na coluna da direita
+     - photos: lista de imagens. Se src ficar vazio, aparece um espaço
+       reservado tracejado para você colocar a foto depois.
+       Ex.: { src: 'assets/images/jedi-1.jpg', alt: 'Descrição', caption: 'Legenda' }
+     ====================================================================== */
+
+  const experiences = {
+    worldskills: {
+      kicker: 'Experiência — 01',
+      title: 'World<br>Skills',
+      role: 'Recomendação — Sesi Senai',
+      lead: 'Durante o curso técnico em Desenvolvimento de Sistemas fui um dos seis alunos recomendados pelo Sesi Senai para o WorldSkills, a maior competição de educação profissional do mundo.',
+      text: [
+        'A recomendação nasceu de projetos, situações de aprendizagem e desafios práticos que exigiram lógica, organização e trabalho em equipe.',
+        'O WorldSkills acontece a cada dois anos e reúne estudantes de dezenas de países em provas práticas de habilidade técnica. A indicação do Sesi Senai reconhece o desempenho e a dedicação dentro da instituição.',
+        'Com os colegas recomendados, participamos de CTFs de treinamento — desafios de segurança no formato captura de bandeira — e, com isso, conquistamos cursos da Cisco Networking Academy.',
+        'Para mim, a recomendação vale mais do que um prêmio: foi o sinal de que o caminho que escolhi — programar, resolver problemas e aprender todos os dias — está dando certo.'
+      ],
+      meta: [
+        { label: 'Tipo', value: 'Recomendação' },
+        { label: 'Instituição', value: 'Sesi Senai' },
+        { label: 'Curso', value: 'Técnico em Desenvolvimento de Sistemas' },
+        { label: 'Grupo', value: '6 alunos recomendados' },
+        { label: 'Destaques', value: 'CTFs de treinamento e cursos da Cisco Networking Academy' }
+      ],
+      photos: []
+    },
+    jedi: {
+      kicker: 'Experiência — 02',
+      title: 'JEDI',
+      role: 'Participação — Join.Valle',
+      lead: 'Participei do JEDI — Jornada de Empreendedorismo, Desenvolvimento e Inovação, promovido pelo Join.Valle em Joinville.',
+      text: [
+        'O JEDI é uma jornada de empreendedorismo e inovação que coloca equipes diante de problemas reais de empresas e da sociedade.',
+        'Durante o programa acompanhei mentorias, trabalhei em equipe na construção de uma solução e apresentei a proposta ao final da jornada.',
+        'Foi a experiência que mais aproximou tecnologia de negócio: entender o problema, ouvir o usuário, testar uma ideia e defender a proposta em público.'
+      ],
+      meta: [
+        { label: 'Tipo', value: 'Participação' },
+        { label: 'Programa', value: 'Jornada de Empreendedorismo, Desenvolvimento e Inovação' },
+        { label: 'Organização', value: 'Join.Valle' },
+        { label: 'Local', value: 'Joinville · SC' }
+      ],
+      photos: [
+        { src: '', alt: '', caption: '' }
+      ]
+    }
+  };
+
   let overlayCurrent = null;
   let overlayLastFocus = null;
   let overlayReturn = null;
   let overlayRestoreFocus = true;
   let overlayTransitionTimer = null;
   let projectsLastFocus = null;
+  let experiencesLastFocus = null;
   let caseDocumentTitle = '';
+  let experienceDocumentTitle = '';
 
   /* ------------------------------------------------------------------ */
   /* Scroll / perspectiva                                                */
@@ -209,7 +275,7 @@
   function overlayStateClass(overlay) {
     if (overlay === aboutOverlay) return 'aboutShow';
     if (overlay === skillsOverlay) return 'skillsShow';
-    if (overlay === experiencesOverlay) return 'experiencesShow';
+    if (overlay === experiencesOverlay || overlay === experienceDetailOverlay) return 'experiencesShow';
     if (overlay === projectsOverlay) return 'projectsShow';
     return 'caseShow';
   }
@@ -224,15 +290,25 @@
         projectsLastFocus = overlayLastFocus;
       }
 
+      if (previous === experiencesOverlay) {
+        experiencesLastFocus = overlayLastFocus;
+      }
+
       closeOverlay({ restoreFocus: false });
     }
 
     overlayCurrent = overlay;
     overlayRestoreFocus = restoreFocus;
-    overlayReturn = previous === projectsOverlay && overlay === caseOverlay ? projectsOverlay : null;
+    overlayReturn = previous === projectsOverlay && overlay === caseOverlay
+      ? projectsOverlay
+      : previous === experiencesOverlay && overlay === experienceDetailOverlay
+        ? experiencesOverlay
+        : null;
     overlayLastFocus = overlay === projectsOverlay && projectsLastFocus
       ? projectsLastFocus
-      : trigger || document.activeElement;
+      : overlay === experiencesOverlay && experiencesLastFocus
+        ? experiencesLastFocus
+        : trigger || document.activeElement;
 
     closeMobileNav();
     body.classList.remove('uiHover');
@@ -251,6 +327,8 @@
       document.title = 'Habilidades — Arthur I. Stelzner';
     } else if (overlay === experiencesOverlay) {
       document.title = 'Experiências — Arthur I. Stelzner';
+    } else if (overlay === experienceDetailOverlay) {
+      document.title = experienceDocumentTitle || 'Experiências — Arthur I. Stelzner';
     } else if (overlay === projectsOverlay) {
       document.title = 'Projetos — Arthur I. Stelzner';
     } else if (caseDocumentTitle) {
@@ -394,7 +472,7 @@
     });
   });
 
-  [aboutOverlay, skillsOverlay, experiencesOverlay, projectsOverlay, caseOverlay].forEach((overlay) => {
+  [aboutOverlay, skillsOverlay, experiencesOverlay, experienceDetailOverlay, projectsOverlay, caseOverlay].forEach((overlay) => {
     overlay.addEventListener('click', (event) => {
       if (event.target === overlay || event.target.classList.contains('overlay-scroll')) {
         closeOverlay();
@@ -447,6 +525,89 @@
     caseLink.setAttribute('aria-label', `Ver ${project.title.replace('<br>', ' ')} no GitHub`);
     caseDocumentTitle = `${project.title.replace('<br>', ' ')} — Arthur I. Stelzner`;
     document.title = caseDocumentTitle;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Detalhes da experiência                                             */
+  /* ------------------------------------------------------------------ */
+
+  function buildPhoto(photo) {
+    const figure = document.createElement('figure');
+    figure.className = 'experience-photo';
+
+    const frame = document.createElement('div');
+    frame.className = 'experience-photo-frame';
+
+    if (photo.src) {
+      const img = document.createElement('img');
+      img.src = photo.src;
+      img.alt = photo.alt || '';
+      img.loading = 'lazy';
+      frame.appendChild(img);
+    } else {
+      frame.classList.add('is-empty');
+      const placeholder = document.createElement('span');
+      placeholder.className = 'experience-photo-placeholder';
+      placeholder.textContent = 'Espaço reservado para a foto';
+      const hint = document.createElement('span');
+      hint.textContent = 'Substitua pela imagem do evento';
+      placeholder.appendChild(hint);
+      frame.appendChild(placeholder);
+    }
+
+    figure.appendChild(frame);
+
+    if (photo.caption) {
+      const caption = document.createElement('figcaption');
+      caption.textContent = photo.caption;
+      figure.appendChild(caption);
+    }
+
+    return figure;
+  }
+
+  function fillExperienceDetail(experience) {
+    experienceKicker.textContent = experience.kicker;
+    experienceTitle.innerHTML = experience.title;
+    experienceRole.textContent = experience.role;
+    experienceLead.textContent = experience.lead;
+
+    experienceText.textContent = '';
+    experience.text.forEach((paragraph) => {
+      const p = document.createElement('p');
+      p.textContent = paragraph;
+      experienceText.appendChild(p);
+    });
+
+    experienceMeta.textContent = '';
+    experience.meta.forEach((item) => {
+      const row = document.createElement('div');
+      const label = document.createElement('span');
+      label.className = 'label';
+      label.textContent = item.label;
+      const value = document.createElement('span');
+      value.textContent = item.value;
+      row.appendChild(label);
+      row.appendChild(value);
+      experienceMeta.appendChild(row);
+    });
+
+    experiencePhotoGrid.textContent = '';
+    const photos = experience.photos || [];
+
+    if (photos.length) {
+      photos.forEach((photo) => {
+        experiencePhotoGrid.appendChild(buildPhoto(photo));
+      });
+
+      experiencePhotos.hidden = false;
+    } else {
+      experiencePhotos.hidden = true;
+    }
+
+    const plainTitle = experience.title.replace('<br>', ' ');
+    experienceDocumentTitle = `${plainTitle} — Arthur I. Stelzner`;
+    document.title = experienceDocumentTitle;
   }
 
   function clearSelectedRows() {
@@ -506,6 +667,18 @@
 
       fillCaseStudy(project);
       openOverlayWithTransition(caseOverlay, card, openedByKeyboard(event));
+    });
+  });
+
+  document.querySelectorAll('.experience-more[data-experience]').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      const experience = experiences[button.dataset.experience];
+      if (!experience) return;
+
+      event.preventDefault();
+
+      fillExperienceDetail(experience);
+      openOverlayWithTransition(experienceDetailOverlay, button, openedByKeyboard(event));
     });
   });
 

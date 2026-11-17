@@ -64,6 +64,7 @@
       .ui .social li { opacity: 1 !important; transform: none !important; }
       .mobile-nav { display: none !important; }
       .case-study { display: none !important; }
+      .experience-detail { display: none !important; }
 
       .about,
       .projects-panel,
@@ -358,10 +359,15 @@
               <p class="experience-role">Recomendação — Sesi Senai</p>
               <p class="experience-desc">Recomendação do Sesi Senai para o WorldSkills, a maior competição de educação profissional do mundo, reconhecendo o desempenho técnico e a dedicação ao longo do curso de Desenvolvimento de Sistemas.</p>
             </div>
-            <div class="experience-meta">
-              <span>Recomendação</span>
-              <span>Sesi Senai</span>
-              <span>Competição internacional</span>
+            <div class="experience-side">
+              <div class="experience-meta">
+                <span>Recomendação</span>
+                <span>Sesi Senai</span>
+                <span>Competição internacional</span>
+              </div>
+              <button class="experience-more" type="button" data-experience="worldskills">
+                Veja mais <span aria-hidden="true">↗</span>
+              </button>
             </div>
           </article>
 
@@ -372,12 +378,46 @@
               <p class="experience-role">Participação — Join.Valle</p>
               <p class="experience-desc">Participação no JEDI — Jornada de Empreendedorismo, Desenvolvimento e Inovação, programa do Join.Valle que conecta estudantes e profissionais a desafios reais de inovação em Joinville.</p>
             </div>
-            <div class="experience-meta">
-              <span>Participação</span>
-              <span>Join.Valle</span>
-              <span>Joinville · SC</span>
+            <div class="experience-side">
+              <div class="experience-meta">
+                <span>Participação</span>
+                <span>Join.Valle</span>
+                <span>Joinville · SC</span>
+              </div>
+              <button class="experience-more" type="button" data-experience="jedi">
+                Veja mais <span aria-hidden="true">↗</span>
+              </button>
             </div>
           </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="overlay experience-detail" id="experiencia-detalhe" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="experiencia-titulo">
+    <button class="btn-back" type="button" aria-label="Voltar para experiências" data-close-overlay>
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </button>
+
+    <div class="overlay-scroll">
+      <div class="experience-detail-container">
+        <header class="experience-detail-head">
+          <p class="experience-detail-kicker" id="experiencia-kicker"></p>
+          <h2 class="experience-detail-title" id="experiencia-titulo"></h2>
+          <p class="experience-detail-role" id="experiencia-role"></p>
+        </header>
+
+        <div class="experience-detail-body">
+          <div class="experience-detail-story">
+            <p class="experience-detail-lead" id="experiencia-lead"></p>
+            <div class="experience-detail-text" id="experiencia-texto"></div>
+          </div>
+
+          <figure class="experience-detail-photos" id="experiencia-fotos" hidden>
+            <div class="experience-photo-grid" id="experiencia-foto-grid"></div>
+          </figure>
+
+          <aside class="experience-detail-meta" id="experiencia-meta" aria-label="Detalhes da experiência"></aside>
         </div>
       </div>
     </div>

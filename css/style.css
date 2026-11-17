@@ -10,6 +10,7 @@
   --accent: #000;
   --muted: rgba(0, 0, 0, .5);
   --line: rgba(0, 0, 0, .2);
+  --line-strong: rgba(0, 0, 0, .38);
   --project-fill: #000;
   --project-hover-fill: transparent;
   --project-stroke: #000;
@@ -32,6 +33,7 @@ html.night-mode {
   --accent: #d4af37;
   --muted: rgba(242, 242, 242, .5);
   --line: rgba(242, 242, 242, .22);
+  --line-strong: rgba(242, 242, 242, .42);
   --project-fill: transparent;
   --project-hover-fill: var(--accent);
   --project-stroke: var(--accent);
@@ -307,6 +309,10 @@ body.loading .curtain {
   text-align: left;
 }
 
+.ui .email a {
+  color: var(--accent);
+}
+
 .ui .email strong {
   font-weight: 500;
 }
@@ -506,12 +512,14 @@ body.mobileNavOpen .color-mode {
 
 html.night-mode .project-card-index,
 html.night-mode .project-card-arrow,
-html.night-mode .arrow-link {
+html.night-mode .arrow-link,
+html.night-mode .experience-more {
   color: var(--accent);
 }
 
 html.night-mode .skills-panel-title,
 html.night-mode .experiences-panel-title,
+html.night-mode .experience-detail-title,
 html.night-mode .projects-panel-title,
 html.night-mode .case-title {
   -webkit-text-stroke-color: var(--accent);
@@ -1387,6 +1395,51 @@ html.night-mode .about .info a:hover {
   line-height: 1.5;
 }
 
+.experience-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  align-self: stretch;
+  min-width: 0;
+}
+
+.experience-more {
+  display: inline-flex;
+  align-self: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 4px;
+  color: var(--ui);
+  border-bottom: 1px solid currentColor;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: color .3s ease, border-color .3s ease;
+}
+
+.experience-more span {
+  display: inline-block;
+  transition: transform .25s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .experience-more:hover {
+    color: var(--project-hover-fill);
+  }
+
+  .experience-more:hover span {
+    transform: translate(4px, -4px);
+  }
+}
+
+.experience-more:focus-visible {
+  outline: 2px solid var(--ui);
+  outline-offset: 6px;
+}
+
 .experience-meta {
   display: flex;
   flex-direction: column;
@@ -1553,6 +1606,215 @@ html.night-mode .about .info a:hover {
 .project-card:focus-visible {
   outline: 2px solid var(--ui);
   outline-offset: 8px;
+}
+
+/* ------------------------ detalhe da experiência -------------------------- */
+
+.experience-detail {
+  background-color: var(--bg);
+  transition:
+    opacity .5s var(--ease-out),
+    visibility 0s .5s,
+    background-color .5s ease;
+}
+
+.experience-detail .overlay-scroll {
+  padding: 18vh 0 12vh;
+}
+
+.experience-detail-container {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 5vw;
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+  transition:
+    opacity .6s var(--ease-soft) .15s,
+    transform .7s var(--ease-out) .15s;
+}
+
+.overlay.is-open .experience-detail-container {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.experience-detail-head {
+  padding-bottom: 4vh;
+  border-bottom: 1px solid var(--line);
+}
+
+.experience-detail-kicker {
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.experience-detail-title {
+  color: transparent;
+  font-family: var(--font-display);
+  font-size: clamp(56px, 8.6vw, 138px);
+  font-weight: 900;
+  font-stretch: 125%;
+  line-height: .85;
+  letter-spacing: -.015em;
+  text-transform: uppercase;
+  -webkit-text-stroke: 2px var(--ui);
+}
+
+.experience-detail-role {
+  margin-top: 22px;
+  color: var(--ui);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.experience-detail-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 300px);
+  column-gap: 5vw;
+  row-gap: 5vh;
+  align-items: start;
+  padding-top: 5vh;
+}
+
+/* Com imagem: duas caixas lado a lado (texto | imagem) e os metadados
+   passam para uma linha abaixo. Sem imagem, o texto divide a linha com
+   os metadados, como antes. */
+@media (min-width: 768px) {
+  .experience-detail-body:has(.experience-detail-photos:not([hidden])) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .experience-detail-body:has(.experience-detail-photos:not([hidden])) .experience-detail-meta {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px 48px;
+    width: 100%;
+    max-width: none;
+    padding-top: 3vh;
+    border-top: 1px solid var(--line);
+  }
+}
+
+.experience-detail-story {
+  min-width: 0;
+}
+
+.experience-detail-lead {
+  margin-bottom: 34px;
+  font-size: clamp(19px, 1.9vw, 28px);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -.015em;
+}
+
+.experience-detail-text p {
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.experience-detail-text p:last-child {
+  margin-bottom: 0;
+}
+
+.experience-detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+
+.experience-detail-meta .label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.experience-detail-meta > div > span:last-child {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* ------------------------- fotos da experiência --------------------------- */
+
+.experience-detail-photos {
+  margin: 0;
+}
+
+.experience-photo-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.experience-photo {
+  display: block;
+  margin: 0;
+}
+
+.experience-photo-frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--line);
+  border: 1px solid var(--line);
+}
+
+.experience-photo-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.experience-photo-frame.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px dashed var(--line-strong);
+  text-align: center;
+}
+
+.experience-photo-placeholder {
+  display: block;
+  max-width: 100%;
+  padding: 0 8%;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.experience-photo-placeholder span {
+  display: block;
+  margin-top: 10px;
+  color: var(--ui);
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: none;
+}
+
+.experience-photo figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 /* ------------------------------ case study -------------------------------- */
@@ -2003,6 +2265,7 @@ html.night-mode .about .info a:hover {
     background-color: var(--bg);
   }
 
+  .experience-detail,
   .case-study {
     z-index: 6;
   }
@@ -2010,6 +2273,7 @@ html.night-mode .about .info a:hover {
   .about .overlay-scroll,
   .skills-panel .overlay-scroll,
   .experiences-panel .overlay-scroll,
+  .experience-detail .overlay-scroll,
   .projects-panel .overlay-scroll,
   .case-study .overlay-scroll {
     padding: calc(72px + 12vw) var(--gutter) 12vw;
@@ -2028,6 +2292,7 @@ html.night-mode .about .info a:hover {
   .about .container,
   .skills-panel-container,
   .experiences-panel-container,
+  .experience-detail-container,
   .projects-panel-container,
   .case-container {
     display: block;
@@ -2042,6 +2307,7 @@ html.night-mode .about .info a:hover {
   .overlay .container,
   .overlay .skills-panel-container,
   .overlay .experiences-panel-container,
+  .overlay .experience-detail-container,
   .overlay .projects-panel-container,
   .overlay .case-container {
     transition: none;
@@ -2165,12 +2431,15 @@ html.night-mode .about .info a:hover {
     font-size: 13px;
   }
 
-  .experience-meta {
+  .experience-side {
     grid-column: 2;
+    gap: 20px;
+  }
+
+  .experience-meta {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 4px 12px;
-    margin-top: 14px;
     padding-top: 0;
     font-size: 10px;
   }
@@ -2265,6 +2534,68 @@ html.night-mode .about .info a:hover {
 
   .case-study .overlay-scroll {
     padding-top: calc(72px + 12vw);
+  }
+
+  .experience-detail-head {
+    padding-bottom: 24px;
+  }
+
+  .experience-detail-kicker {
+    margin-bottom: 14px;
+  }
+
+  .experience-detail-title {
+    font-size: 12vw;
+    line-height: .9;
+    -webkit-text-stroke-width: 1px;
+  }
+
+  .experience-detail-role {
+    margin-top: 14px;
+    font-size: 11px;
+  }
+
+  .experience-detail-body {
+    display: block;
+    padding-top: 30px;
+  }
+
+  .experience-detail-story,
+  .experience-detail-meta {
+    width: 100%;
+    max-width: none;
+  }
+
+  .experience-detail-lead {
+    margin-bottom: 26px;
+    font-size: 19px;
+    line-height: 1.4;
+  }
+
+  .experience-detail-text p {
+    font-size: 14px;
+  }
+
+  .experience-detail-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .experience-detail-meta > div > span:last-child {
+    font-size: 13px;
+  }
+
+  .experience-detail-photos {
+    margin-top: 32px;
+  }
+
+  .experience-photo-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 
   .case-head {

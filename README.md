@@ -33,6 +33,7 @@ python -m http.server 8000
 - Overlay "sobre" com bio, disponibilidade e contato
 - Overlay "habilidades" com formação, níveis de domínio e ferramentas
 - Overlay "experiências" com eventos e reconhecimentos (WorldSkills, JEDI)
+- Botão "Veja mais" em cada experiência, abrindo uma tela de detalhe com relato e foto
 - Dois temas: noturno (preto, branco e dourado) e claro
 - Tema salvo no `localStorage` e aplicado no `<head>`, antes da primeira pintura
 - Intro com cortina, logo em slide-up e projetos se abrindo em perspectiva
@@ -46,3 +47,19 @@ python -m http.server 8000
 | PetAlliance | Em desenvolvimento | Python · MySQL |
 | Vitrine GMM | Finalizado | HTML · CSS · JavaScript |
 | SA: Falaí | Finalizado | Python · MySQL · HTML/CSS |
+
+## Editar as experiências
+
+O texto das telas "Veja mais" fica em `js/app.js`, no objeto `experiences` (procure por
+`EXPERIÊNCIAS`). Cada experiência tem `lead` (frase de abertura), `text` (um item por parágrafo),
+`meta` (rótulos da coluna de informações) e `photos`.
+
+Para colocar a foto do JEDI, salve a imagem em `assets/images/` e preencha o `src`:
+
+```js
+photos: [
+  { src: 'assets/images/jedi-1.jpg', alt: 'Equipe do JEDI', caption: 'JEDI — Joinville' }
+]
+```
+
+Enquanto o `src` estiver vazio, aparece um espaço reservado tracejado no lugar da imagem.
