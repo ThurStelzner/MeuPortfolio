@@ -1,281 +1,474 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" class="night-mode">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="icon" href="style/icon-portfolio.svg">  
-    <title>Portfólio - Arthur Stelzner</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5">
+  <meta name="description" content="Portfólio de Arthur I. Stelzner — desenvolvedor full stack, criando experiências digitais com personalidade e precisão.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Aplica o tema salvo antes de qualquer pintura da página -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var root = document.documentElement;
+
+        if (stored === 'light-mode' || stored === 'night-mode') {
+          root.classList.remove('night-mode', 'light-mode');
+          root.classList.add(stored);
+        }
+
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.setAttribute('content', root.classList.contains('light-mode') ? '#f2f2f2' : '#000000');
+        }
+      } catch (error) {}
+    })();
+  </script>
+  <meta property="og:title" content="Arthur I. Stelzner — Desenvolvedor Full Stack">
+  <meta property="og:description" content="Portfólio de Arthur I. Stelzner — projetos, habilidades e contato.">
+  <meta property="og:type" content="website">
+  <title>Arthur I. Stelzner — Desenvolvedor Full Stack</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <noscript>
+    <style>
+      .curtain { display: none !important; }
+      body,
+      body.home-page.intro {
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        height: auto !important;
+        pointer-events: auto !important;
+      }
+      .stagePerspective { height: auto !important; overflow: visible !important; }
+      .stageContainer { height: auto !important; }
+      .stage {
+        position: static !important;
+        min-height: 0 !important;
+        padding: 5vw 5vw 12vh 0 !important;
+        transform: none !important;
+        animation: none !important;
+      }
+      .projectContainer {
+        visibility: visible !important;
+        opacity: 1 !important;
+        animation: none !important;
+      }
+      .ui .contact ul,
+      .ui .links li,
+      .ui .social li { opacity: 1 !important; transform: none !important; }
+      .mobile-nav { display: none !important; }
+      .case-study { display: none !important; }
+
+      .about,
+      .projects-panel,
+      .skills-panel,
+      .experiences-panel {
+        display: block !important;
+        position: static !important;
+        overflow: visible !important;
+        height: auto !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+      }
+
+      .about .btn-back,
+      .projects-panel .btn-back,
+      .skills-panel .btn-back,
+      .experiences-panel .btn-back { display: none !important; }
+
+      .about .overlay-scroll,
+      .projects-panel .overlay-scroll,
+      .skills-panel .overlay-scroll,
+      .experiences-panel .overlay-scroll {
+        position: static !important;
+        height: auto !important;
+        padding: 8vw 5vw !important;
+        overflow: visible !important;
+      }
+
+      .about .container,
+      .projects-panel-container,
+      .skills-panel-container,
+      .experiences-panel-container {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      @media (max-width: 767px) {
+        .ui {
+          position: static !important;
+          display: block !important;
+          padding: 5vw var(--gutter) 0 !important;
+        }
+
+        .ui .info {
+          position: static !important;
+          display: block !important;
+          width: 100% !important;
+          height: auto !important;
+          padding: 12vw 0 0 !important;
+          overflow: visible !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+        }
+
+        .stagePerspective {
+          padding-top: 8vw !important;
+        }
+      }
+    </style>
+  </noscript>
 </head>
-<body>
-    <nav class="navbar navbar-dark bg-dark d-lg-none fixed-top">
-        <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">Arthur I. Stelzner</span>
-            <div class="dropdown">
-                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-list"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#" data-bs-dismiss="dropdown">Início</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#projetos" data-bs-dismiss="dropdown">Projetos</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#habilidades" data-bs-dismiss="dropdown">Habilidades</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#sobremim" data-bs-dismiss="dropdown">Sobre Mim</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#contatos" data-bs-dismiss="dropdown">Contatos</a></li>
-                </ul>
-            </div>
+<body class="home-page loading intro">
+
+  <div class="curtain" aria-hidden="true"></div>
+
+  <header class="ui">
+    <a class="logo" href="#" aria-label="Arthur I. Stelzner — início" data-close-overlays>
+      <span class="slideUp"><span>Arthur</span></span>
+      <span class="slideUp"><span>I.</span></span>
+      <span class="slideUp"><span>Stelzner</span></span>
+    </a>
+
+    <button class="mobile-nav" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="mobile-nav-box"><span class="mobile-nav-inner"></span></span>
+    </button>
+
+    <div class="info" id="menu-principal">
+      <div class="left">
+        <div class="contact">
+          <ul>
+            <li>Desenvolvedor Full Stack</li>
+            <li class="email"><a href="mailto:arthurstelzner@gmail.com"><strong>arthurstelzner@gmail.com</strong></a></li>
+          </ul>
         </div>
-    </nav>
-    <aside class="d-none d-lg-block">
-        <nav>
-            <img src="style/foto2.jpg" alt="Minha Foto">
-            <h3>Arthur I. Stelzner</h3>
-            <ul class="itens">
-                <li><a href="#">Início</a></li>
-                <li><a href="#projetos">Projetos</a></li>
-                <li><a href="#habilidades">Habilidades</a></li>
-                <li><a href="#sobremim">Sobre Mim</a></li>
-                <li><a href="#contatos">Contatos</a></li>
-            </ul>
+
+      </div>
+
+      <div class="right">
+        <nav class="social" aria-label="Redes sociais">
+          <ul>
+            <li><a href="https://github.com/ThurStelzner?tab=repositories" target="_blank" rel="noopener"><span>01</span> <strong>github</strong></a></li>
+            <li><a href="https://www.linkedin.com/in/arthur-iantas-stelzner-867a392b5" target="_blank" rel="noopener"><span>02</span> <strong>linkedin</strong></a></li>
+            <li><a href="https://wa.me/47997092604" target="_blank" rel="noopener"><span>03</span> <strong>whatsapp</strong></a></li>
+          </ul>
         </nav>
-    </aside>
-    <main class="text-center">
-        <h2>Bem-Vindo!</h2>
-        <h1>Desenvolvedor Web</h1>
-        <h3>Em Formação</h3>
-        <button class="btn btn-ctt" onclick="window.location.href=('https://wa.me/47997092604')">Contate-me</button>
-    </main>
-    <section>
-        <div class="projetos text-center" id="projetos">
-            <h2>Meus Projetos</h2>
-            <div class="container">
-                <div class="card">
-                    <h5>Pet Alliance</h5>
-                    <span>Estado: Em desenvolvimento</span>
-                    <p>PetAlliance, é um aplicativo para ajudar donos de animais a terem boas crias, com segurança e facilidade.</p>
-                    <button class="btn btn-ctt" onclick="window.location.href=('https://github.com/ThurStelzner/PetAlliance')">Veja</button>
-                </div>
-                <div class="card">
-                    <h5>Vitrine GMM</h5>
-                    <span>Estado: Finalizado</span>
-                    <p>GMM Refrigeração Assistência técnica de eletrodomésticos Ar condicionados, Refrigedadores, Freezers, Fogões e muito mais.</p>
-                    <button class="btn btn-ctt" onclick="window.location.href=('https://github.com/ThurStelzner/VitrineGMM')">Veja</button>
-                </div>
-                <div class="card">
-                    <h5>SA: Falaí</h5>
-                    <span>Estado: Finalizado</span>
-                    <p>Situação de Aprendizagem 2025 Sesi Senai Sul de Joinville</p>
-                    <button class="btn btn-ctt" onclick="window.location.href=('https://github.com/ThurStelzner/FalaiSA')">Veja</button>
-                </div>
-            </div>
-        </div>
-        <div class="habilidades text-center" id="habilidades">
-            <h2>Minhas Habilidades</h2>
-            <div class="hcont row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center">
-                <div class="hcard col clickable-card" data-bs-toggle="modal" data-bs-target="#modalphp">
-                    <img src="style/Icon-PHP.png" alt="Icone PHP">
-                    <h5>PHP</h5>
-                    <p>Nível: básico</p>
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 25%"></div>
-                    </div>
-                </div>
-                <div class="hcard col clickable-card" data-bs-toggle="modal" data-bs-target="#modalpython">
-                    <img src="style/Icon-PYTHON.png" alt="Icone PYTHON">
-                    <h5>Python</h5>
-                    <p>Nível: Avançado</p>
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 75%"></div>
-                    </div>
-                </div>
-                <div class="hcard col clickable-card" data-bs-toggle="modal" data-bs-target="#modalhtml">
-                    <img src="style/Icon-HTML.png" alt="Icone HTML">
-                    <h5>HTML</h5>
-                    <p>Nível: Intermediário</p>
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 60%"></div>
-                    </div>
-                </div>
-                <div class="hcard col clickable-card" data-bs-toggle="modal" data-bs-target="#modalcss">
-                    <img src="style/Icon-CSS.png" alt="Icone CSS">
-                    <h5>CSS</h5>
-                    <p>Nível: Intermediário</p>
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 60%"></div>
-                    </div>
-                </div>
-                <div class="hcard col clickable-card" data-bs-toggle="modal" data-bs-target="#modalmysql">
-                    <img src="style/Icon-MYSQL.png" alt="Icone MYSQL">
-                    <h5>MySql</h5>
-                    <p>Nível: Intermediário</p>
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 60%"></div>
-                    </div>
-                </div>
-                <div class="hcard col clickable-card" data-bs-toggle="modal" data-bs-target="#modaljs">
-                    <img src="style/Icon-JS.png" alt="Icone JavaScript">
-                    <h5>JavaScript</h5>
-                    <p>Nível: Básico</p>
-                    <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar" style="width: 35%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sobre-mim" id="sobremim">
-            <h2>Sobre Mim</h2>
-            <h4>Arthur Iantas Stelzner</h4>
-            <p>Meu nome é Arthur Iantas Stelzner, tenho 16 anos, estudo o curso técnico de Desenvolvimento de Sistemas na instituição Sesi Senai Sul de Joinville. Sou apaixonado por técnologia e tenho muita facilidade de aprender coisas da área.</p>
-            <p>Estudando na rede Senai, desenvolvi projetos CRUD e Situações de Aprendizagem, colocando em prática todas as habilidades aprendidas ao longo do curso.</p>
-            <p>Hoje em dia busco aprimorar e aprender novas tecnologias.</p>
-        </div>
-    </section>
-    <footer>
-        <div class="contatos row text-center" id="contatos">
-            <div class="col-md-4 mb-3 d-flex flex-column align-items-center">
-                <h6>Arthur Iantas Stelzner</h6>
-                <span>Desenvolvedor Júnior</span>
-            </div>
-            <div class="col-md-4 mb-3 d-flex flex-column align-items-center">
-                <h6>Contatos</h6>
-                <span>(47) 99709-2604</span>
-                <span>arthurstelzner@gmail.com</span>
-            </div>
-            <div class="col-md-4 mb-3 d-flex flex-column align-items-center">
-                <h6>Redes</h6>
-                <div>
-                    <ul>
-                        <li>
-                            <a href="https://github.com/ThurStelzner?tab=repositories">
-                                <i class="bi bi-github">GitHub</i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://wa.me/47997092604">
-                                <i class="bi bi-whatsapp">Whatsapp</i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/in/arthur-iantas-stelzner-867a392b5">
-                                <i class="bi bi-linkedin">Linkedin</i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://discordapp.com/users/thuzin_n">
-                                <i class="bi bi-discord">Discord</i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <div class="modal fade" id="modalphp" tabindex="-1" aria-labelledby="modalphpLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalphpLabel">Conhecimentos PHP</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Estudo autodidata, busco informações em blogs, sites, manuais, entre outras ferramentas. 
-                    Busco conhecer mais da linguagem e usar em futuros projetos.
-                </div>
-                <div class="modal-footer">
-                    Futura matéria do Senai.
-                </div>
-            </div>
-        </div>
+
+        <button class="color-mode" type="button" data-mode="night" aria-label="Mudar para o tema claro" title="Mudar para o tema claro">
+          <span class="icon icon-moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
+            </svg>
+          </span>
+          <span class="icon icon-sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+              <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>
+              </g>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="copyright">© 2026 Arthur I. Stelzner. Todos os direitos reservados.</div>
     </div>
-    <div class="modal fade" id="modalpython" tabindex="-1" aria-labelledby="modalpythonLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalpythonLabel">Conhecimentos Python</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Principal linguagem aprendida no curso de Desenvolvimento de Sistemas do Senai. 
-                    Principal utilizada na S.A.
-                </div>
-                <div class="modal-footer">
-                    Estudado no Senai.
-                </div>
+  </header>
+
+  <div class="stagePerspective parallaxPerspective">
+    <div class="stageContainer">
+      <main class="stage">
+        <ul class="projects" aria-label="Navegação principal">
+          <li class="projectsLi">
+            <div class="projectContainer">
+              <a href="#sobre" data-open-about data-info="01 — perfil" data-year="01">Sobre</a>
             </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalhtml" tabindex="-1" aria-labelledby="modalhtmlLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalhtmlLabel">Conhecimentos HTML</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Utilizado em todos os projetos do Senai, tenho conhecimento intermediário e busco aprender mais.
-                    Estudo reforçado em casa para melhorar meu conhecimento.
-                </div>
-                <div class="modal-footer">
-                    Estudado no Senai.
-                </div>
+          </li>
+          <li class="projectsLi">
+            <div class="projectContainer">
+              <a href="#projetos" data-open-projects data-info="02 — trabalhos" data-year="02">Projetos</a>
             </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalcss" tabindex="-1" aria-labelledby="modalcssLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalcssLabel">Conhecimentos CSS</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Conhecimento intermediário de CSS, usado principalmente nas SAs do Senai.
-                    Atualmente também utilizo BOOTSTRAP para me auxiliar.
-                </div>
-                <div class="modal-footer">
-                    Estudado no Senai.
-                </div>
+          </li>
+          <li class="projectsLi projectsLi--wide">
+            <div class="projectContainer">
+              <a href="#habilidades" data-open-skills data-info="03 — técnico" data-year="03">Habilidades</a>
             </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalmysql" tabindex="-1" aria-labelledby="modalmysqlLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalmysqlLabel">Conhecimentos MySql</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Conteúdo abordado no Senai, onde manipulei dados do banco além da inserção em projetos como S.A. 
-                </div>
-                <div class="modal-footer">
-                    Estudado no Senai.
-                </div>
+          </li>
+          <li class="projectsLi projectsLi--compact">
+            <div class="projectContainer">
+              <a href="#experiencias" data-open-experiences data-info="04 — eventos" data-year="04">Experiências</a>
             </div>
-        </div>
+          </li>
+        </ul>
+      </main>
     </div>
-    <div class="modal fade" id="modaljs" tabindex="-1" aria-labelledby="modaljsLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modaljsLabel">Conhecimentos JS</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Estudo autodidata e abordado no senai. Utilizando a segunda edição do livro
-                    "Lógica de Programação e Algoritimos com JavaScript"
-                </div>
-                <div class="modal-footer">
-                    Estudado no Senai.
-                </div>
+  </div>
+
+  <section class="overlay about" id="sobre" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="sobre-titulo">
+    <button class="btn-back" type="button" aria-label="Fechar sobre" data-close-overlay>
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </button>
+
+    <div class="overlay-scroll">
+      <div class="container">
+        <div class="left">
+          <h2 class="heading" id="sobre-titulo">Desenvolvedor Full Stack, transformando ideias em interfaces com personalidade e precisão.</h2>
+          <p>Meu nome é Arthur Iantas Stelzner, tenho 16 anos e estudo o curso técnico de Desenvolvimento de Sistemas no Sesi Senai Sul de Joinville.</p>
+          <p>Sou apaixonado por tecnologia e tenho facilidade para aprender. Na rede Senai, desenvolvi projetos CRUD e Situações de Aprendizagem, colocando em prática tudo o que venho aprendendo ao longo do curso.</p>
+          <p>Hoje busco aprimorar minhas habilidades, explorar novas tecnologias e criar experiências digitais que unam design e código.</p>
+          <div class="about-cta">
+            <a class="arrow-link" href="mailto:arthurstelzner@gmail.com">Vamos conversar <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="info">
+            <h5 class="heading">Disponibilidade</h5>
+            <h6 class="title">Estágio &amp; projetos —</h6>
+            <p>Aberto a oportunidades</p>
+            <p>Remoto</p>
+          </div>
+
+          <div class="info">
+            <h5 class="heading">Contato</h5>
+            <h6 class="title">Fale comigo —</h6>
+            <ul>
+              <li><a href="mailto:arthurstelzner@gmail.com">arthurstelzner@gmail.com</a></li>
+              <li><a href="https://wa.me/47997092604" target="_blank" rel="noopener">+55 47 99709-2604</a></li>
+              <li><a href="https://github.com/ThurStelzner" target="_blank" rel="noopener">github.com/ThurStelzner</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="overlay skills-panel" id="habilidades" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="habilidades-titulo">
+    <button class="btn-back" type="button" aria-label="Fechar habilidades" data-close-overlay>
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </button>
+
+    <div class="overlay-scroll">
+      <div class="skills-panel-container">
+        <header class="skills-panel-head">
+          <h2 class="skills-panel-title" id="habilidades-titulo">Habilidades</h2>
+          <p class="skills-panel-kicker">Stack · Certificações · Formação</p>
+        </header>
+
+        <div class="skills-panel-body">
+          <div class="skills-panel-main">
+            <div class="skills-block-head">
+              <h3 class="heading">Linguagens &amp; tecnologias</h3>
+              <span class="skills-block-note">Stack principal</span>
             </div>
+
+            <div class="skills-groups">
+              <section class="skills-group">
+                <h4 class="skills-group-title">Back-end &amp; linguagens</h4>
+                <ul class="tech-list">
+                  <li>PHP</li>
+                  <li>Python</li>
+                  <li>Node.js</li>
+                  <li>JavaScript</li>
+                  <li>TypeScript</li>
+                  <li>C</li>
+                  <li>C++</li>
+                </ul>
+              </section>
+
+              <section class="skills-group">
+                <h4 class="skills-group-title">Banco de dados &amp; ferramentas</h4>
+                <ul class="tech-list">
+                  <li>MySQL</li>
+                  <li>Docker</li>
+                  <li>Git &amp; GitHub</li>
+                </ul>
+              </section>
+
+              <section class="skills-group">
+                <h4 class="skills-group-title">Front-end</h4>
+                <ul class="tech-list">
+                  <li>HTML5</li>
+                  <li>CSS3</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+
+          <aside class="skills-panel-side">
+            <div class="info">
+              <h5 class="heading">Cursos &amp; certificados</h5>
+              <h6 class="title">Cisco Networking Academy —</h6>
+              <ul>
+                <li>Introdução à Cibersegurança</li>
+                <li>Segurança de Endpoint</li>
+                <li>Defesa de Rede</li>
+              </ul>
+            </div>
+
+            <div class="info">
+              <h5 class="heading">Formação &amp; cursos</h5>
+              <h6 class="title">SENAI —</h6>
+              <ul>
+                <li>Técnico em Desenvolvimento de Sistemas</li>
+                <li>Circuitos Eletrônicos Automatizados</li>
+                <li>Produtividade e Difusão Tecnológica na Indústria</li>
+              </ul>
+            </div>
+          </aside>
         </div>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </section>
+
+  <section class="overlay experiences-panel" id="experiencias" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="experiencias-titulo">
+    <button class="btn-back" type="button" aria-label="Fechar experiências" data-close-overlay>
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </button>
+
+    <div class="overlay-scroll">
+      <div class="experiences-panel-container">
+        <header class="experiences-panel-head">
+          <h2 class="experiences-panel-title" id="experiencias-titulo">Experiências</h2>
+          <p class="experiences-panel-kicker">Eventos · Reconhecimentos</p>
+        </header>
+
+        <div class="experience-list">
+          <article class="experience-item">
+            <span class="experience-index" aria-hidden="true">01</span>
+            <div class="experience-main">
+              <h3 class="experience-name">WorldSkills</h3>
+              <p class="experience-role">Recomendação — Sesi Senai</p>
+              <p class="experience-desc">Recomendação do Sesi Senai para o WorldSkills, a maior competição de educação profissional do mundo, reconhecendo o desempenho técnico e a dedicação ao longo do curso de Desenvolvimento de Sistemas.</p>
+            </div>
+            <div class="experience-meta">
+              <span>Recomendação</span>
+              <span>Sesi Senai</span>
+              <span>Competição internacional</span>
+            </div>
+          </article>
+
+          <article class="experience-item">
+            <span class="experience-index" aria-hidden="true">02</span>
+            <div class="experience-main">
+              <h3 class="experience-name">JEDI</h3>
+              <p class="experience-role">Participação — Join.Valle</p>
+              <p class="experience-desc">Participação no JEDI — Jornada de Empreendedorismo, Desenvolvimento e Inovação, programa do Join.Valle que conecta estudantes e profissionais a desafios reais de inovação em Joinville.</p>
+            </div>
+            <div class="experience-meta">
+              <span>Participação</span>
+              <span>Join.Valle</span>
+              <span>Joinville · SC</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="overlay projects-panel" id="projetos" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="projetos-titulo">
+    <button class="btn-back" type="button" aria-label="Fechar projetos" data-close-overlay>
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </button>
+
+    <div class="overlay-scroll">
+      <div class="projects-panel-container">
+        <header class="projects-panel-head">
+          <h2 class="projects-panel-title" id="projetos-titulo">Projetos</h2>
+          <p class="projects-panel-kicker">Selecionados — 2025</p>
+        </header>
+
+        <ul class="project-list">
+          <li class="project-item">
+            <a class="project-card" href="https://github.com/ThurStelzner/PetAlliance" target="_blank" rel="noopener" data-project="petalliance">
+              <span class="project-card-index" aria-hidden="true">01</span>
+              <span class="project-card-main">
+                <span class="project-card-name">Pet<br>Alliance</span>
+                <span class="project-card-desc">Aplicativo para criadores de animais, com informações, cuidados e acompanhamento em um só lugar.</span>
+              </span>
+              <span class="project-card-meta">
+                <span>Em desenvolvimento</span>
+                <span>2025</span>
+                <span>Aplicativo</span>
+                <span>Python · MySQL</span>
+              </span>
+              <span class="project-card-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li class="project-item">
+            <a class="project-card" href="https://github.com/ThurStelzner/VitrineGMM" target="_blank" rel="noopener" data-project="vitrine">
+              <span class="project-card-index" aria-hidden="true">02</span>
+              <span class="project-card-main">
+                <span class="project-card-name">Vitrine<br>GMM</span>
+                <span class="project-card-desc">Vitrine digital para a GMM Refrigeração, assistência técnica especializada em eletrodomésticos.</span>
+              </span>
+              <span class="project-card-meta">
+                <span>Finalizado</span>
+                <span>2025</span>
+                <span>Site institucional</span>
+                <span>HTML · CSS · JavaScript</span>
+              </span>
+              <span class="project-card-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li class="project-item">
+            <a class="project-card" href="https://github.com/ThurStelzner/FalaiSA" target="_blank" rel="noopener" data-project="falai">
+              <span class="project-card-index" aria-hidden="true">03</span>
+              <span class="project-card-main">
+                <span class="project-card-name">SA:<br>Falaí</span>
+                <span class="project-card-desc">Situação de Aprendizagem do Sesi Senai Sul de Joinville, unindo lógica, banco de dados e web.</span>
+              </span>
+              <span class="project-card-meta">
+                <span>Finalizado</span>
+                <span>2025</span>
+                <span>Projeto acadêmico</span>
+                <span>Python · MySQL · HTML/CSS</span>
+              </span>
+              <span class="project-card-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="overlay case-study" id="case-study" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="case-title">
+    <button class="btn-back" type="button" aria-label="Fechar projeto" data-close-overlay>
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </button>
+
+    <div class="overlay-scroll">
+      <div class="case-container">
+        <div class="case-head">
+          <p class="case-kicker" id="case-kicker">Projeto — 01</p>
+          <h2 class="case-title" id="case-title"></h2>
+        </div>
+
+        <div class="case-body">
+          <div class="case-summary">
+            <p id="case-description"></p>
+            <a class="arrow-link" id="case-link" href="#" target="_blank" rel="noopener">Ver no GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+
+          <aside class="case-meta" aria-label="Detalhes do projeto">
+            <div><span class="label">Status</span><span id="case-status"></span></div>
+            <div><span class="label">Ano</span><span id="case-year"></span></div>
+            <div><span class="label">Tipo</span><span id="case-type"></span></div>
+            <div><span class="label">Stack</span><span id="case-stack"></span></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/app.js"></script>
 </body>
 </html>
