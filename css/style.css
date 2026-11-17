@@ -46,6 +46,8 @@ html.night-mode {
 *::before,
 *::after {
   box-sizing: border-box;
+  /* Remove o flash azul ao tocar em links e botões no celular. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -1754,37 +1756,71 @@ html.night-mode .about .info a:hover {
   margin: 0;
 }
 
-.experience-photo-grid {
-  display: grid;
-  gap: 24px;
-}
-
-.experience-photo {
-  display: block;
+.experience-carousel {
   margin: 0;
 }
 
-.experience-photo-frame {
+/* Moldura quadrada: todas as fotos entram no mesmo formato (recorte central). */
+.carousel-viewport {
   position: relative;
-  display: block;
-  aspect-ratio: 4 / 3;
   overflow: hidden;
-  background-color: var(--line);
-  border: 1px solid var(--line);
+  aspect-ratio: 1 / 1;
+  touch-action: pan-y;
+  cursor: grab;
 }
 
-.experience-photo-frame img {
+.carousel-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.carousel-viewport:focus-visible {
+  outline: 2px solid var(--ui);
+  outline-offset: 4px;
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  will-change: transform;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  perspective: 2200px;
+}
+
+/* A foto da vez inclina em 3D: segue o mouse no hover e o arrasto no toque. */
+.carousel-slide.is-active img {
+  /* .94 deixa folga para a foto girar sem ser cortada pela moldura */
+  transform: rotateX(var(--photo-tilt-x, 0deg)) rotateY(var(--photo-tilt-y, 0deg)) scale(.94);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform .7s var(--ease-out);
+}
+
+.carousel-viewport.is-tilting .carousel-slide.is-active img {
+  transition-duration: .12s;
+  transition-timing-function: ease-out;
+}
+
+.carousel-slide img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-.experience-photo-frame.is-empty {
+.carousel-empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
+  width: 100%;
+  height: 100%;
   border: 1px dashed var(--line-strong);
   text-align: center;
 }
@@ -1810,11 +1846,84 @@ html.night-mode .about .info a:hover {
   text-transform: none;
 }
 
-.experience-photo figcaption {
-  margin-top: 12px;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.45;
+/* Laterais clicáveis: a faixa inteira da esquerda e da direita passa a foto. */
+.carousel-nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 26%;
+  min-width: 76px;
+  padding: 0;
+  background-color: transparent;
+  background-image: none;
+  border: 0;
+  touch-action: pan-y;
+  transition: background-image .3s ease;
+}
+
+.carousel-nav--prev { left: 0; }
+.carousel-nav--next { right: 0; }
+
+.carousel-nav:disabled {
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .carousel-nav:not(:disabled):hover {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0));
+  }
+
+  .carousel-nav--next:not(:disabled):hover {
+    background-image: linear-gradient(to left, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0));
+  }
+}
+
+.carousel-nav:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -8px;
+}
+
+.carousel-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.carousel-dot {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+}
+
+.carousel-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transform: translateY(-50%);
+  background-color: var(--line);
+  transition: background-color .3s ease;
+}
+
+.carousel-dot.is-active::after {
+  background-color: var(--ui);
+}
+
+.carousel-dot:focus-visible {
+  outline: 2px solid var(--ui);
+  outline-offset: 2px;
 }
 
 /* ------------------------------ case study -------------------------------- */
@@ -2593,9 +2702,8 @@ html.night-mode .about .info a:hover {
     margin-top: 32px;
   }
 
-  .experience-photo-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
+  .carousel-bar {
+    margin-top: 14px;
   }
 
   .case-head {

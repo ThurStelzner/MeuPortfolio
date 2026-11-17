@@ -34,7 +34,6 @@
   const experienceText = document.getElementById('experiencia-texto');
   const experienceMeta = document.getElementById('experiencia-meta');
   const experiencePhotos = document.getElementById('experiencia-fotos');
-  const experiencePhotoGrid = document.getElementById('experiencia-foto-grid');
 
   const desktopQuery = window.matchMedia('(min-width: 768px)');
   const hoverQuery = window.matchMedia('(hover: hover)');
@@ -124,7 +123,9 @@
         { label: 'Local', value: 'Joinville · SC' }
       ],
       photos: [
-        { src: '', alt: '', caption: '' }
+        { src: 'assets/images/GAB_0696.webp', alt: 'Arthur falando ao microfone no palco do JEDI' },
+        { src: 'assets/images/GAB_0723.webp', alt: 'Arthur apresentando ao lado do painel do JEDI, no Ágora Tech Park' },
+        { src: 'assets/images/GAB_0757.webp', alt: 'Plateia acompanhando as apresentações do JEDI' }
       ]
     }
   };
@@ -531,37 +532,336 @@
   /* Detalhes da experiência                                             */
   /* ------------------------------------------------------------------ */
 
-  function buildPhoto(photo) {
-    const figure = document.createElement('figure');
-    figure.className = 'experience-photo';
+  let carouselRefresh = null;
+  let carouselRefreshTimer = null;
+  let carouselDragMove = null;
+  let carouselDragEnd = null;
 
-    const frame = document.createElement('div');
-    frame.className = 'experience-photo-frame';
+  window.addEventListener('resize', () => {
+    if (typeof carouselRefresh !== 'function') return;
+    window.clearTimeout(carouselRefreshTimer);
+    carouselRefreshTimer = window.setTimeout(() => carouselRefresh(), 120);
+  });
+
+  /* O arrasto é acompanhado na janela para continuar funcionando mesmo
+     se o ponteiro sair da imagem. Só o carrossel ativo responde. */
+  window.addEventListener('pointermove', (event) => {
+    if (typeof carouselDragMove === 'function') carouselDragMove(event);
+  });
+
+  window.addEventListener('pointerup', (event) => {
+    if (typeof carouselDragEnd === 'function') carouselDragEnd(event);
+  });
+
+  window.addEventListener('pointercancel', (event) => {
+    if (typeof carouselDragEnd === 'function') carouselDragEnd(event);
+  });
+
+  function buildSlide(photo, position, total) {
+    const slide = document.createElement('div');
+    slide.className = 'carousel-slide';
+    slide.setAttribute('role', 'group');
+    slide.setAttribute('aria-roledescription', 'slide');
+    slide.setAttribute('aria-label', `Foto ${position + 1} de ${total}`);
 
     if (photo.src) {
       const img = document.createElement('img');
       img.src = photo.src;
       img.alt = photo.alt || '';
-      img.loading = 'lazy';
-      frame.appendChild(img);
+      img.draggable = false;
+      if (position > 0) img.loading = 'lazy';
+      slide.appendChild(img);
     } else {
-      frame.classList.add('is-empty');
+      const empty = document.createElement('div');
+      empty.className = 'carousel-empty';
+
       const placeholder = document.createElement('span');
       placeholder.className = 'experience-photo-placeholder';
       placeholder.textContent = 'Espaço reservado para a foto';
+
       const hint = document.createElement('span');
       hint.textContent = 'Substitua pela imagem do evento';
       placeholder.appendChild(hint);
-      frame.appendChild(placeholder);
+
+      empty.appendChild(placeholder);
+      slide.appendChild(empty);
     }
 
-    figure.appendChild(frame);
+    return slide;
+  }
 
-    if (photo.caption) {
-      const caption = document.createElement('figcaption');
-      caption.textContent = photo.caption;
-      figure.appendChild(caption);
+  function createCarousel(photos) {
+    const total = photos.length;
+    const multiple = total > 1;
+
+    const figure = document.createElement('figure');
+    figure.className = 'experience-carousel';
+
+    const viewport = document.createElement('div');
+    viewport.className = 'carousel-viewport';
+
+    const track = document.createElement('div');
+    track.className = 'carousel-track';
+
+    photos.forEach((photo, position) => {
+      track.appendChild(buildSlide(photo, position, total));
+    });
+
+    viewport.appendChild(track);
+    figure.appendChild(viewport);
+
+    const slides = Array.prototype.slice.call(track.children);
+
+    let index = 0;
+    let dots = [];
+    let prevButton = null;
+    let nextButton = null;
+
+    function slideWidth() {
+      return viewport.clientWidth || 1;
     }
+
+    function setOffset(offset, animate) {
+      const moving = animate && !reducedMotion.matches;
+      track.style.transition = moving ? 'transform .55s cubic-bezier(.23, 1, .32, 1)' : 'none';
+      track.style.transform = `translate3d(${offset}px, 0, 0)`;
+    }
+
+    function updateUi() {
+      slides.forEach((slide, position) => {
+        slide.classList.toggle('is-active', position === index);
+      });
+
+      dots.forEach((dot, position) => {
+        dot.classList.toggle('is-active', position === index);
+        if (position === index) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+
+      if (prevButton) prevButton.disabled = index === 0;
+      if (nextButton) nextButton.disabled = index === total - 1;
+    }
+
+    function goTo(target, animate = true) {
+      index = Math.max(0, Math.min(total - 1, target));
+      setOffset(-index * slideWidth(), animate);
+      updateUi();
+    }
+
+    if (multiple) {
+      prevButton = document.createElement('button');
+      prevButton.type = 'button';
+      prevButton.className = 'carousel-nav carousel-nav--prev';
+      prevButton.setAttribute('aria-label', 'Foto anterior');
+      prevButton.addEventListener('click', () => goTo(index - 1));
+
+      nextButton = document.createElement('button');
+      nextButton.type = 'button';
+      nextButton.className = 'carousel-nav carousel-nav--next';
+      nextButton.setAttribute('aria-label', 'Próxima foto');
+      nextButton.addEventListener('click', () => goTo(index + 1));
+
+      viewport.appendChild(prevButton);
+      viewport.appendChild(nextButton);
+
+      const bar = document.createElement('div');
+      bar.className = 'carousel-bar';
+
+      const dotsWrap = document.createElement('div');
+      dotsWrap.className = 'carousel-dots';
+
+      dots = photos.map((photo, position) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'carousel-dot';
+        dot.setAttribute('aria-label', `Ir para a foto ${position + 1}`);
+        dot.addEventListener('click', () => goTo(position));
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+
+      bar.appendChild(dotsWrap);
+      figure.appendChild(bar);
+
+      viewport.tabIndex = 0;
+      viewport.setAttribute('aria-roledescription', 'carrossel');
+      viewport.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          goTo(index - 1);
+        } else if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          goTo(index + 1);
+        }
+      });
+    }
+
+    /* Arrastar: o trilho acompanha o ponteiro e encaixa ao soltar.
+       As laterais (setas) seguem clicáveis porque só suprimimos o clique
+       quando houve arrasto de verdade. */
+    let drag = null;
+    let suppressClick = false;
+
+    viewport.addEventListener('pointerdown', (event) => {
+      if (!multiple) return;
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+      suppressClick = false;
+      drag = {
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        dragX: 0,
+        axis: null,
+        moved: false
+      };
+
+      track.style.transition = 'none';
+      viewport.classList.add('is-dragging');
+    });
+
+    function onPointerMove(event) {
+      if (!drag || event.pointerId !== drag.pointerId) return;
+
+      const dx = event.clientX - drag.startX;
+      const dy = event.clientY - drag.startY;
+
+      if (!drag.axis) {
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+        drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+      }
+
+      if (drag.axis !== 'x') return;
+
+      const base = -index * slideWidth();
+      const beyond = (index === 0 && dx > 0) || (index === total - 1 && dx < 0);
+
+      drag.moved = true;
+      drag.dragX = dx;
+      setOffset(base + (beyond ? dx * 0.3 : dx), false);
+    }
+
+    function onPointerUp(event) {
+      if (!drag || event.pointerId !== drag.pointerId) return;
+
+      const moved = drag.moved;
+      const distance = drag.dragX;
+
+      drag = null;
+      viewport.classList.remove('is-dragging');
+
+      if (!moved) return;
+
+      suppressClick = true;
+
+      const threshold = Math.min(slideWidth() * 0.2, 90);
+
+      if (distance <= -threshold) goTo(index + 1);
+      else if (distance >= threshold) goTo(index - 1);
+      else goTo(index);
+    }
+
+    carouselDragMove = onPointerMove;
+    carouselDragEnd = onPointerUp;
+
+    /* Inclinação 3D: segue o mouse no desktop e o dedo no celular. */
+    const TILT_MAX_X = 10;
+    const TILT_MAX_Y = 16;
+    const TILT_TOUCH_THRESHOLD = 8;
+
+    let tiltPointer = null;
+    let tiltStartX = 0;
+    let tiltStartY = 0;
+    let tiltActive = false;
+
+    function tiltFromEvent(event) {
+      const rect = viewport.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+
+      const nx = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width) * 2 - 1));
+      const ny = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height) * 2 - 1));
+
+      viewport.style.setProperty('--photo-tilt-y', `${(nx * TILT_MAX_Y).toFixed(2)}deg`);
+      viewport.style.setProperty('--photo-tilt-x', `${(-ny * TILT_MAX_X).toFixed(2)}deg`);
+      viewport.classList.add('is-tilting');
+    }
+
+    function resetTilt() {
+      tiltPointer = null;
+      tiltActive = false;
+      viewport.classList.remove('is-tilting');
+      viewport.style.setProperty('--photo-tilt-y', '0deg');
+      viewport.style.setProperty('--photo-tilt-x', '0deg');
+    }
+
+    viewport.addEventListener('pointerdown', (event) => {
+      if (reducedMotion.matches) return;
+      if (event.pointerType === 'mouse') return;
+
+      tiltPointer = event.pointerId;
+      tiltStartX = event.clientX;
+      tiltStartY = event.clientY;
+      tiltActive = false;
+    });
+
+    viewport.addEventListener('pointermove', (event) => {
+      if (reducedMotion.matches) return;
+
+      if (event.pointerType === 'mouse') {
+        tiltFromEvent(event);
+        return;
+      }
+
+      if (event.pointerId !== tiltPointer) return;
+
+      if (!tiltActive) {
+        const dx = Math.abs(event.clientX - tiltStartX);
+        const dy = Math.abs(event.clientY - tiltStartY);
+
+        if (dx < TILT_TOUCH_THRESHOLD && dy < TILT_TOUCH_THRESHOLD) return;
+
+        tiltActive = true;
+      }
+
+      tiltFromEvent(event);
+    });
+
+    viewport.addEventListener('pointerup', (event) => {
+      if (event.pointerType === 'mouse') return;
+      if (event.pointerId !== tiltPointer) return;
+      resetTilt();
+    });
+
+    viewport.addEventListener('pointercancel', (event) => {
+      if (event.pointerType === 'mouse') return;
+      if (event.pointerId !== tiltPointer) return;
+      resetTilt();
+    });
+
+    viewport.addEventListener('pointerleave', (event) => {
+      if (event.pointerType !== 'mouse') return;
+      resetTilt();
+    });
+
+    /* Depois de arrastar, o clique que vem logo em seguida não deve
+       disparar a seta (mas o clique por teclado passa normalmente). */
+    viewport.addEventListener('click', (event) => {
+      if (!suppressClick) return;
+
+      suppressClick = false;
+
+      if (event.detail === 0) return;
+
+      event.stopPropagation();
+      event.preventDefault();
+    }, true);
+
+    carouselRefresh = () => {
+      if (!viewport.isConnected) return;
+      setOffset(-index * slideWidth(), false);
+    };
+
+    updateUi();
 
     return figure;
   }
@@ -592,14 +892,11 @@
       experienceMeta.appendChild(row);
     });
 
-    experiencePhotoGrid.textContent = '';
+    experiencePhotos.textContent = '';
     const photos = experience.photos || [];
 
     if (photos.length) {
-      photos.forEach((photo) => {
-        experiencePhotoGrid.appendChild(buildPhoto(photo));
-      });
-
+      experiencePhotos.appendChild(createCarousel(photos));
       experiencePhotos.hidden = false;
     } else {
       experiencePhotos.hidden = true;
