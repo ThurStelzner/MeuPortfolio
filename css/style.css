@@ -1016,12 +1016,15 @@ body.outro .projectContainer {
 }
 
 .about .left .heading {
-  margin-bottom: 34px;
-  font-family: var(--font-sans);
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 1.22;
-  letter-spacing: -.02em;
+  margin-bottom: 36px;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 2.5vw, 40px);
+  font-weight: 800;
+  font-stretch: 112%;
+  line-height: 1.06;
+  letter-spacing: -.015em;
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .about .left p {
@@ -1044,31 +1047,56 @@ body.outro .projectContainer {
   flex-direction: column;
   width: 38%;
   max-width: 420px;
-  padding-top: 8px;
+  padding-top: 0;
 }
 
 .about .info {
   width: 100%;
-  margin-bottom: 38px;
+  margin-bottom: 34px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
 }
 
 .about .right .info:last-child {
   margin-bottom: 0;
 }
 
-.about .heading {
-  margin-bottom: 14px;
+/* Rótulo do bloco (Disponibilidade / Contato) — kicker discreto. */
+.about .info .heading {
+  margin-bottom: 10px;
+  color: var(--muted);
   font-family: var(--font-sans);
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 500;
   line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
 }
 
-.about .title {
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 400;
+/* Frase-guia do bloco — mais destaque que o corpo. */
+.about .info .title {
+  margin-bottom: 10px;
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
   color: inherit;
+}
+
+/* Marca de "disponível" antes de "Aberto a oportunidades". */
+.about .right .info:first-child p:first-of-type {
+  font-weight: 500;
+}
+
+.about .right .info:first-child p:first-of-type::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 9px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  vertical-align: .06em;
 }
 
 .about p,
@@ -1088,12 +1116,17 @@ body.outro .projectContainer {
 .about .info a {
   position: relative;
   display: inline-block;
-  border-bottom: 1px solid transparent;
-  transition: border-color .2s ease;
+  border-bottom: 1px solid var(--line);
+  transition: border-color .2s ease, color .2s ease;
 }
 
 .about .info a:hover {
   border-bottom-color: currentColor;
+}
+
+html.night-mode .about .info a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 .arrow-link {
@@ -1641,10 +1674,6 @@ body.outro .projectContainer {
     width: 44%;
   }
 
-  .about .left .heading {
-    font-size: 26px;
-  }
-
   .about .left p {
     font-size: 18px;
   }
@@ -2190,7 +2219,7 @@ body.outro .projectContainer {
   .about .left .heading {
     margin-bottom: 26px;
     font-size: 26px;
-    line-height: 1.2;
+    line-height: 1.1;
   }
 
   .about .left p {
@@ -2220,11 +2249,10 @@ body.outro .projectContainer {
     margin-bottom: 32px;
   }
 
-  .about .heading {
+  .about .info .title {
     font-size: 17px;
   }
 
-  .about .title,
   .about p,
   .about li {
     font-size: 14px;
