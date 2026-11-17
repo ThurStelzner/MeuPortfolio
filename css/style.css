@@ -11,6 +11,8 @@
   --muted: rgba(0, 0, 0, .5);
   --line: rgba(0, 0, 0, .2);
   --line-strong: rgba(0, 0, 0, .38);
+  --scrim: rgba(255, 255, 255, .5);
+  --scrim-end: rgba(255, 255, 255, 0);
   --project-fill: #000;
   --project-hover-fill: transparent;
   --project-stroke: #000;
@@ -34,6 +36,8 @@ html.night-mode {
   --muted: rgba(242, 242, 242, .5);
   --line: rgba(242, 242, 242, .22);
   --line-strong: rgba(242, 242, 242, .42);
+  --scrim: rgba(0, 0, 0, .45);
+  --scrim-end: rgba(0, 0, 0, 0);
   --project-fill: transparent;
   --project-hover-fill: var(--accent);
   --project-stroke: var(--accent);
@@ -1428,10 +1432,6 @@ html.night-mode .about .info a:hover {
 }
 
 @media (hover: hover) {
-  .experience-more:hover {
-    color: var(--project-hover-fill);
-  }
-
   .experience-more:hover span {
     transform: translate(4px, -4px);
   }
@@ -1871,11 +1871,11 @@ html.night-mode .about .info a:hover {
 
 @media (hover: hover) {
   .carousel-nav:not(:disabled):hover {
-    background-image: linear-gradient(to right, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(to right, var(--scrim), var(--scrim-end));
   }
 
   .carousel-nav--next:not(:disabled):hover {
-    background-image: linear-gradient(to left, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(to left, var(--scrim), var(--scrim-end));
   }
 }
 

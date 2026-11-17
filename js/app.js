@@ -109,15 +109,18 @@
     jedi: {
       kicker: 'Experiência — 02',
       title: 'JEDI',
-      role: 'Participação — Join.Valle',
-      lead: 'Participei do JEDI — Jornada de Empreendedorismo, Desenvolvimento e Inovação, promovido pelo Join.Valle em Joinville.',
+      role: 'Selecionado pelo SENAI — FIESC',
+      lead: 'Fui selecionado a dedo pelo SENAI para representar a FIESC no JEDI — a Jornada de Empreendedorismo, Desenvolvimento e Inovação, promovida pelo Join.Valle em Joinville.',
       text: [
-        'O JEDI é uma jornada de empreendedorismo e inovação que coloca equipes diante de problemas reais de empresas e da sociedade.',
-        'Durante o programa acompanhei mentorias, trabalhei em equipe na construção de uma solução e apresentei a proposta ao final da jornada.',
-        'Foi a experiência que mais aproximou tecnologia de negócio: entender o problema, ouvir o usuário, testar uma ideia e defender a proposta em público.'
+        'A seleção foi a dedo: o SENAI me escolheu para representar a FIESC no JEDI, uma jornada que coloca equipes diante de problemas reais de empresas e da sociedade.',
+        'Ao longo do programa acompanhei mentorias valiosas com profissionais de mercado — conversas que mudaram a forma como eu olhava para o problema, para o usuário e para o produto.',
+        'Com a equipe, criamos o AutoVox: uma solução pensada para oficinas mecânicas, apresentada por nós ao final da jornada.',
+        'Mais do que o projeto, o JEDI foi a experiência que mais aproximou tecnologia de negócio — e defender o AutoVox em público foi onde venci minhas inseguranças sociais.'
       ],
       meta: [
-        { label: 'Tipo', value: 'Participação' },
+        { label: 'Tipo', value: 'Seleção pelo SENAI' },
+        { label: 'Representação', value: 'FIESC' },
+        { label: 'Projeto', value: 'AutoVox — oficinas mecânicas' },
         { label: 'Programa', value: 'Jornada de Empreendedorismo, Desenvolvimento e Inovação' },
         { label: 'Organização', value: 'Join.Valle' },
         { label: 'Local', value: 'Joinville · SC' }
