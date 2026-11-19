@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="night-mode">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5">
+  <meta name="description" content="Experiências e reconhecimentos de Arthur I. Stelzner — WorldSkills e JEDI (Join.Valle).">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Aplica o tema salvo antes de qualquer pintura da página -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var root = document.documentElement;
+
+        if (stored === 'light-mode' || stored === 'night-mode') {
+          root.classList.remove('night-mode', 'light-mode');
+          root.classList.add(stored);
+        }
+
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.setAttribute('content', root.classList.contains('light-mode') ? '#f2f2f2' : '#000000');
+        }
+      } catch (error) {}
+    })();
+  </script>
+  <meta property="og:title" content="Experiências — Arthur I. Stelzner">
+  <meta property="og:description" content="Eventos e reconhecimentos de Arthur I. Stelzner — WorldSkills e JEDI.">
+  <meta property="og:type" content="website">
+  <title>Experiências — Arthur I. Stelzner</title>
+
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <!-- Primeira pintura: fundo do tema + cortina opaca, sem flash de conteúdo cru -->
+  <style>
+    html { background-color: #000; }
+    html.light-mode { background-color: #f2f2f2; }
+    .curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background-color: #000;
+    }
+    html.light-mode .curtain { background-color: #f2f2f2; }
+  </style>
+  <noscript>
+    <style>
+      .curtain { display: none !important; }
+      body { overflow: auto !important; height: auto !important; }
+      .experience-detail { display: none !important; }
+    </style>
+  </noscript>
+</head>
+<body class="page experiencesShow loading" data-page="experiences">
+
+  <div class="curtain" aria-hidden="true"></div>
+
+  <!-- O cabeçalho não aparece nas páginas separadas: inert o mantém fora do foco e da leitura de tela. -->
+  <header class="ui" inert>
+    <a class="logo" href="index.html" aria-label="Arthur I. Stelzner — início">
+      <span class="slideUp"><span>Arthur</span></span>
+      <span class="slideUp"><span>I.</span></span>
+      <span class="slideUp"><span>Stelzner</span></span>
+      <span class="logo-role" aria-hidden="true">Desenvolvedor Full Stack</span>
+    </a>
+
+    <button class="mobile-nav" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="mobile-nav-box"><span class="mobile-nav-inner"></span></span>
+    </button>
+
+    <div class="info" id="menu-principal">
+      <div class="left">
+        <div class="contact">
+          <ul>
+            <li>Desenvolvedor Full Stack</li>
+            <li class="email"><a href="mailto:arthurstelzner@gmail.com"><strong>arthurstelzner@gmail.com</strong></a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="right">
+        <nav class="social" aria-label="Redes sociais">
+          <ul>
+            <li><a href="https://github.com/ThurStelzner?tab=repositories" target="_blank" rel="noopener"><span>01</span> <strong>github</strong></a></li>
+            <li><a href="https://www.linkedin.com/in/arthur-iantas-stelzner-867a392b5" target="_blank" rel="noopener"><span>02</span> <strong>linkedin</strong></a></li>
+            <li><a href="https://wa.me/47997092604" target="_blank" rel="noopener"><span>03</span> <strong>whatsapp</strong></a></li>
+          </ul>
+        </nav>
+
+        <button class="color-mode" type="button" data-mode="night" aria-label="Mudar para o tema claro" title="Mudar para o tema claro">
+          <span class="icon icon-moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
+            </svg>
+          </span>
+          <span class="icon icon-sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+              <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>
+              </g>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="copyright">© 2026 Arthur I. Stelzner. Todos os direitos reservados.</div>
+    </div>
+  </header>
+
+  <section class="overlay experiences-panel is-open page-panel" id="experiencias" aria-labelledby="experiencias-titulo">
+    <a class="btn-back" href="index.html" aria-label="Voltar ao início">
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </a>
+
+    <div class="overlay-scroll">
+      <div class="experiences-panel-container">
+        <header class="experiences-panel-head">
+          <h2 class="experiences-panel-title" id="experiencias-titulo">Experiências</h2>
+          <p class="experiences-panel-kicker">Eventos · Reconhecimentos</p>
+        </header>
+
+        <div class="experience-list">
+          <article class="experience-item">
+            <span class="experience-index" aria-hidden="true">01</span>
+            <div class="experience-main">
+              <h3 class="experience-name">WorldSkills</h3>
+              <p class="experience-role">Recomendação — Sesi Senai</p>
+              <p class="experience-desc">Recomendação do Sesi Senai para o WorldSkills, a maior competição de educação profissional do mundo, reconhecendo o desempenho técnico e a dedicação ao longo do curso de Desenvolvimento de Sistemas.</p>
+            </div>
+            <div class="experience-side">
+              <div class="experience-meta">
+                <span>Recomendação</span>
+                <span>Sesi Senai</span>
+                <span>Competição internacional</span>
+              </div>
+              <button class="experience-more" type="button" data-experience="worldskills">
+                Veja mais <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </article>
+
+          <article class="experience-item">
+            <span class="experience-index" aria-hidden="true">02</span>
+            <div class="experience-main">
+              <h3 class="experience-name">JEDI</h3>
+              <p class="experience-role">Participação — Join.Valle</p>
+              <p class="experience-desc">Participação no JEDI — Jornada de Empreendedorismo, Desenvolvimento e Inovação, programa do Join.Valle que conecta estudantes e profissionais a desafios reais de inovação em Joinville.</p>
+            </div>
+            <div class="experience-side">
+              <div class="experience-meta">
+                <span>Participação</span>
+                <span>Join.Valle</span>
+                <span>Joinville · SC</span>
+              </div>
+              <button class="experience-more" type="button" data-experience="jedi">
+                Veja mais <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="overlay experience-detail" id="experiencia-detalhe" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="experiencia-titulo">
+    <button class="btn-back" type="button" aria-label="Voltar para experiências" data-close-overlay>
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </button>
+
+    <div class="overlay-scroll">
+      <div class="experience-detail-container">
+        <header class="experience-detail-head">
+          <p class="experience-detail-kicker" id="experiencia-kicker"></p>
+          <h2 class="experience-detail-title" id="experiencia-titulo"></h2>
+          <p class="experience-detail-role" id="experiencia-role"></p>
+        </header>
+
+        <div class="experience-detail-body">
+          <div class="experience-detail-story">
+            <p class="experience-detail-lead" id="experiencia-lead"></p>
+            <div class="experience-detail-text" id="experiencia-texto"></div>
+          </div>
+
+          <div class="experience-detail-photos" id="experiencia-fotos" hidden></div>
+
+          <aside class="experience-detail-meta" id="experiencia-meta" aria-label="Detalhes da experiência"></aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

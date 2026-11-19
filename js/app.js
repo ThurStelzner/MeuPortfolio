@@ -39,6 +39,16 @@
   const hoverQuery = window.matchMedia('(hover: hover)');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  /* Páginas separadas (sobre.html, projetos.html...): o painel principal já
+     está aberto no HTML e o body guarda data-page. Ao fechar um overlay de
+     detalhe, é esse estado que precisa voltar. */
+  const pageStateClass = {
+    about: 'aboutShow',
+    skills: 'skillsShow',
+    experiences: 'experiencesShow',
+    projects: 'projectsShow'
+  }[body.dataset.page] || null;
+
   const originalTitle = document.title;
 
   const projects = {
@@ -156,6 +166,8 @@
   function layoutStage() {
     isDesktop = desktopQuery.matches;
 
+    if (!stage || !stageContainer || !stagePerspective) return;
+
     if (!isDesktop) {
       stageContainer.style.height = '';
       stage.style.transform = '';
@@ -181,7 +193,7 @@
   }
 
   function tick() {
-    if (isDesktop && !body.classList.contains('intro')) {
+    if (stage && isDesktop && !body.classList.contains('intro')) {
       if (reducedMotion.matches) {
         currentScroll = targetScroll;
       } else {
@@ -197,14 +209,16 @@
     rafId = window.requestAnimationFrame(tick);
   }
 
-  stagePerspective.addEventListener('scroll', () => {
-    targetScroll = stagePerspective.scrollTop;
+  if (stagePerspective) {
+    stagePerspective.addEventListener('scroll', () => {
+      targetScroll = stagePerspective.scrollTop;
 
-    if (reducedMotion.matches && isDesktop) {
-      currentScroll = targetScroll;
-      stage.style.transform = `translate3d(0, ${-currentScroll}px, 0)`;
-    }
-  }, { passive: true });
+      if (reducedMotion.matches && isDesktop && stage) {
+        currentScroll = targetScroll;
+        stage.style.transform = `translate3d(0, ${-currentScroll}px, 0)`;
+      }
+    }, { passive: true });
+  }
 
   window.addEventListener('resize', () => {
     window.clearTimeout(resizeTimer);
@@ -221,8 +235,10 @@
     layoutStage();
     if (desktopQuery.matches) {
       body.classList.remove('mobileNavOpen');
-      mobileNav.setAttribute('aria-expanded', 'false');
-      mobileNav.setAttribute('aria-label', 'Abrir menu');
+      if (mobileNav) {
+        mobileNav.setAttribute('aria-expanded', 'false');
+        mobileNav.setAttribute('aria-label', 'Abrir menu');
+      }
     }
   });
 
@@ -230,7 +246,7 @@
   /* UI / navegação                                                      */
   /* ------------------------------------------------------------------ */
 
-  if (hoverQuery.matches) {
+  if (ui && hoverQuery.matches) {
     ui.addEventListener('mouseenter', () => {
       body.classList.add('uiHover');
     });
@@ -241,6 +257,8 @@
   }
 
   function closeMobileNav({ restoreFocus = false } = {}) {
+    if (!mobileNav) return;
+
     const wasOpen = body.classList.contains('mobileNavOpen');
     body.classList.remove('mobileNavOpen');
     mobileNav.setAttribute('aria-expanded', 'false');
@@ -251,20 +269,24 @@
     }
   }
 
-  mobileNav.addEventListener('click', (event) => {
-    event.stopPropagation();
-    const isOpen = body.classList.toggle('mobileNavOpen');
-    mobileNav.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    mobileNav.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
-    body.classList.remove('uiHover');
-  });
-
-  ui.querySelectorAll('a[href], button').forEach((item) => {
-    if (item === mobileNav || item.closest('.color-mode')) return;
-    item.addEventListener('click', () => {
-      closeMobileNav({ restoreFocus: true });
+  if (mobileNav) {
+    mobileNav.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen = body.classList.toggle('mobileNavOpen');
+      mobileNav.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      mobileNav.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+      body.classList.remove('uiHover');
     });
-  });
+  }
+
+  if (ui) {
+    ui.querySelectorAll('a[href], button').forEach((item) => {
+      if (item === mobileNav || item.closest('.color-mode')) return;
+      item.addEventListener('click', () => {
+        closeMobileNav({ restoreFocus: true });
+      });
+    });
+  }
 
   /* ------------------------------------------------------------------ */
   /* Overlays                                                            */
@@ -362,6 +384,13 @@
     clearSelectedRows();
 
     body.classList.remove('aboutShow', 'skillsShow', 'experiencesShow', 'projectsShow', 'caseShow', 'overlayOpen');
+
+    /* Em página separada o painel principal é a própria página: devolve o
+       estado que mantém o cabeçalho e o logo escondidos corretamente. */
+    if (pageStateClass) {
+      body.classList.add(pageStateClass);
+    }
+
     overlayCurrent = null;
     overlayReturn = null;
     document.title = originalTitle;
@@ -399,18 +428,20 @@
      A delegação garante o clique físico sem disparar o link duas vezes. */
   let clickedWithPointer = false;
 
-  projectsList.addEventListener('click', (event) => {
-    const row = event.target.closest('.projectsLi');
-    if (!row) return;
+  if (projectsList) {
+    projectsList.addEventListener('click', (event) => {
+      const row = event.target.closest('.projectsLi');
+      if (!row) return;
 
-    const link = row.querySelector('a');
-    if (!link || event.target.closest('a') === link) return;
+      const link = row.querySelector('a');
+      if (!link || event.target.closest('a') === link) return;
 
-    event.preventDefault();
-    clickedWithPointer = event.detail !== 0;
-    link.click();
-    clickedWithPointer = false;
-  });
+      event.preventDefault();
+      clickedWithPointer = event.detail !== 0;
+      link.click();
+      clickedWithPointer = false;
+    });
+  }
 
   /* Só devolve o foco ao item quando a abertura veio do teclado:
      no mouse isso deixaria o link com o visual de hover/seleção. */
@@ -418,31 +449,57 @@
     return event.detail === 0 && !clickedWithPointer;
   }
 
-  document.querySelectorAll('[data-open-about]').forEach((button) => {
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      openOverlayWithTransition(aboutOverlay, button, openedByKeyboard(event));
-    });
-  });
+  /* ------------------------------------------------------------------ */
+  /* Navegação entre páginas                                             */
+  /* ------------------------------------------------------------------ */
 
-  document.querySelectorAll('[data-open-skills]').forEach((button) => {
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      openOverlayWithTransition(skillsOverlay, button, openedByKeyboard(event));
-    });
-  });
+  /* O item clicado gira até ficar de frente (como acontecia ao abrir os
+     painéis) e só então a cortina cobre a tela e a próxima página entra. */
+  let pageLeaving = false;
 
-  document.querySelectorAll('[data-open-experiences]').forEach((button) => {
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      openOverlayWithTransition(experiencesOverlay, button, openedByKeyboard(event));
-    });
-  });
+  /* Ritmo da saída: precisa casar com a transição de `.projectsLi.isSelected`
+     (.6s) e com o fade da cortina (.6s). */
+  const LEAVE_TURN_MS = 420;
+  const LEAVE_FADE_MS = 560;
 
-  document.querySelectorAll('[data-open-projects]').forEach((button) => {
-    button.addEventListener('click', (event) => {
+  document.querySelectorAll('.projects a[href]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (pageLeaving) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+
+      const href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+
       event.preventDefault();
-      openOverlayWithTransition(projectsOverlay, button, openedByKeyboard(event));
+      pageLeaving = true;
+
+      if (reducedMotion.matches) {
+        window.location.href = href;
+        return;
+      }
+
+      const row = link.closest('.projectsLi');
+
+      if (row) {
+        row.classList.add('isSelected');
+
+        window.setTimeout(() => {
+          body.classList.add('loading');
+
+          window.setTimeout(() => {
+            window.location.href = href;
+          }, LEAVE_FADE_MS);
+        }, LEAVE_TURN_MS);
+
+        return;
+      }
+
+      /* Links fora da lista 3D mantêm o fade direto pela cortina. */
+      body.classList.add('loading', 'outro');
+
+      window.setTimeout(() => {
+        window.location.href = href;
+      }, 700);
     });
   });
 
@@ -462,7 +519,7 @@
 
       closeMobileNav();
 
-      if (desktopQuery.matches) {
+      if (stagePerspective && desktopQuery.matches) {
         stagePerspective.scrollTo({
           top: 0,
           behavior: reducedMotion.matches ? 'auto' : 'smooth'
@@ -476,7 +533,7 @@
     });
   });
 
-  [aboutOverlay, skillsOverlay, experiencesOverlay, experienceDetailOverlay, projectsOverlay, caseOverlay].forEach((overlay) => {
+  [aboutOverlay, skillsOverlay, experiencesOverlay, experienceDetailOverlay, projectsOverlay, caseOverlay].filter(Boolean).forEach((overlay) => {
     overlay.addEventListener('click', (event) => {
       if (event.target === overlay || event.target.classList.contains('overlay-scroll')) {
         closeOverlay();
@@ -507,7 +564,7 @@
 
     if (overlayCurrent) {
       closeOverlay();
-    } else if (body.classList.contains('mobileNavOpen')) {
+    } else if (mobileNav && body.classList.contains('mobileNavOpen')) {
       closeMobileNav();
       mobileNav.focus({ preventScroll: true });
     }
@@ -911,6 +968,8 @@
   }
 
   function clearSelectedRows() {
+    if (!projectsList) return;
+
     projectsList.querySelectorAll('.projectsLi.isSelected').forEach((row) => {
       row.classList.remove('isSelected');
     });
@@ -960,6 +1019,9 @@
 
   document.querySelectorAll('.project-card[data-project]').forEach((card) => {
     card.addEventListener('click', (event) => {
+      /* Ctrl/Cmd/clique do meio abre o GitHub direto, como qualquer link. */
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+
       const project = projects[card.dataset.project];
       if (!project) return;
 
@@ -1041,25 +1103,48 @@
   /* Entrada                                                             */
   /* ------------------------------------------------------------------ */
 
+  /* Duração da entrada — precisa casar com as animações de `body.intro`. */
+  const INTRO_MS = 1200;
+
+  let booted = false;
+
   function boot() {
+    if (booted) return;
+    booted = true;
+
+    /* A entrada começa agora, e não no carregamento do HTML: assim ela é
+       vista de verdade (em vez de rodar escondida atrás da cortina). As
+       fontes são locais e chegam durante a animação. */
+    if (stage && !reducedMotion.matches) {
+      body.classList.add('intro');
+    }
+
     layoutStage();
-    tick();
 
-    window.setTimeout(() => {
+    if (stage) tick();
+
+    /* Solta a cortina no quadro seguinte: o conteúdo aparece já em movimento. */
+    window.requestAnimationFrame(() => {
       body.classList.remove('loading');
-    }, reducedMotion.matches ? 0 : 500);
+    });
 
+    /* Assim que a entrada termina, libera a interação. */
     window.setTimeout(() => {
       body.classList.remove('intro');
-      targetScroll = stagePerspective.scrollTop;
-      currentScroll = targetScroll;
-    }, reducedMotion.matches ? 30 : 3050);
+
+      if (stagePerspective) {
+        targetScroll = stagePerspective.scrollTop;
+        currentScroll = targetScroll;
+      }
+
+      layoutStage();
+    }, reducedMotion.matches ? 0 : INTRO_MS);
   }
 
-  if (document.readyState === 'complete') {
-    boot();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot, { once: true });
   } else {
-    window.addEventListener('load', boot, { once: true });
+    boot();
   }
 
   if (document.fonts && document.fonts.ready) {
@@ -1067,6 +1152,17 @@
       layoutStage();
     });
   }
+
+  /* Ao voltar pelo histórico (bfcache), a página pode reaparecer no estado de
+     saída: limpa as classes e reenquadra o palco 3D. */
+  window.addEventListener('pageshow', (event) => {
+    if (!event.persisted) return;
+
+    pageLeaving = false;
+    body.classList.remove('loading', 'outro', 'mobileNavOpen', 'intro');
+    clearSelectedRows();
+    layoutStage();
+  });
 
   window.addEventListener('beforeunload', () => {
     if (rafId) window.cancelAnimationFrame(rafId);

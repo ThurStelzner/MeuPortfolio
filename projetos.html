@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="night-mode">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5">
+  <meta name="description" content="Projetos de Arthur I. Stelzner — PetAlliance, Vitrine GMM e SA: Falaí.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Aplica o tema salvo antes de qualquer pintura da página -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var root = document.documentElement;
+
+        if (stored === 'light-mode' || stored === 'night-mode') {
+          root.classList.remove('night-mode', 'light-mode');
+          root.classList.add(stored);
+        }
+
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.setAttribute('content', root.classList.contains('light-mode') ? '#f2f2f2' : '#000000');
+        }
+      } catch (error) {}
+    })();
+  </script>
+  <meta property="og:title" content="Projetos — Arthur I. Stelzner">
+  <meta property="og:description" content="PetAlliance, Vitrine GMM e SA: Falaí — projetos de Arthur I. Stelzner.">
+  <meta property="og:type" content="website">
+  <title>Projetos — Arthur I. Stelzner</title>
+
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <!-- Primeira pintura: fundo do tema + cortina opaca, sem flash de conteúdo cru -->
+  <style>
+    html { background-color: #000; }
+    html.light-mode { background-color: #f2f2f2; }
+    .curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background-color: #000;
+    }
+    html.light-mode .curtain { background-color: #f2f2f2; }
+  </style>
+  <noscript>
+    <style>
+      .curtain { display: none !important; }
+      body { overflow: auto !important; height: auto !important; }
+      .case-study { display: none !important; }
+    </style>
+  </noscript>
+</head>
+<body class="page projectsShow loading" data-page="projects">
+
+  <div class="curtain" aria-hidden="true"></div>
+
+  <!-- O cabeçalho não aparece nas páginas separadas: inert o mantém fora do foco e da leitura de tela. -->
+  <header class="ui" inert>
+    <a class="logo" href="index.html" aria-label="Arthur I. Stelzner — início">
+      <span class="slideUp"><span>Arthur</span></span>
+      <span class="slideUp"><span>I.</span></span>
+      <span class="slideUp"><span>Stelzner</span></span>
+      <span class="logo-role" aria-hidden="true">Desenvolvedor Full Stack</span>
+    </a>
+
+    <button class="mobile-nav" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="mobile-nav-box"><span class="mobile-nav-inner"></span></span>
+    </button>
+
+    <div class="info" id="menu-principal">
+      <div class="left">
+        <div class="contact">
+          <ul>
+            <li>Desenvolvedor Full Stack</li>
+            <li class="email"><a href="mailto:arthurstelzner@gmail.com"><strong>arthurstelzner@gmail.com</strong></a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="right">
+        <nav class="social" aria-label="Redes sociais">
+          <ul>
+            <li><a href="https://github.com/ThurStelzner?tab=repositories" target="_blank" rel="noopener"><span>01</span> <strong>github</strong></a></li>
+            <li><a href="https://www.linkedin.com/in/arthur-iantas-stelzner-867a392b5" target="_blank" rel="noopener"><span>02</span> <strong>linkedin</strong></a></li>
+            <li><a href="https://wa.me/47997092604" target="_blank" rel="noopener"><span>03</span> <strong>whatsapp</strong></a></li>
+          </ul>
+        </nav>
+
+        <button class="color-mode" type="button" data-mode="night" aria-label="Mudar para o tema claro" title="Mudar para o tema claro">
+          <span class="icon icon-moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
+            </svg>
+          </span>
+          <span class="icon icon-sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+              <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>
+              </g>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="copyright">© 2026 Arthur I. Stelzner. Todos os direitos reservados.</div>
+    </div>
+  </header>
+
+  <section class="overlay projects-panel is-open page-panel" id="projetos" aria-labelledby="projetos-titulo">
+    <a class="btn-back" href="index.html" aria-label="Voltar ao início">
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </a>
+
+    <div class="overlay-scroll">
+      <div class="projects-panel-container">
+        <header class="projects-panel-head">
+          <h2 class="projects-panel-title" id="projetos-titulo">Projetos</h2>
+          <p class="projects-panel-kicker">Selecionados — 2025</p>
+        </header>
+
+        <ul class="project-list">
+          <li class="project-item">
+            <a class="project-card" href="https://github.com/ThurStelzner/PetAlliance" target="_blank" rel="noopener" data-project="petalliance">
+              <span class="project-card-index" aria-hidden="true">01</span>
+              <span class="project-card-main">
+                <span class="project-card-name">Pet<br>Alliance</span>
+                <span class="project-card-desc">Aplicativo para criadores de animais, com informações, cuidados e acompanhamento em um só lugar.</span>
+              </span>
+              <span class="project-card-meta">
+                <span>Em desenvolvimento</span>
+                <span>2025</span>
+                <span>Aplicativo</span>
+                <span>Python · MySQL</span>
+              </span>
+              <span class="project-card-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li class="project-item">
+            <a class="project-card" href="https://github.com/ThurStelzner/VitrineGMM" target="_blank" rel="noopener" data-project="vitrine">
+              <span class="project-card-index" aria-hidden="true">02</span>
+              <span class="project-card-main">
+                <span class="project-card-name">Vitrine<br>GMM</span>
+                <span class="project-card-desc">Vitrine digital para a GMM Refrigeração, assistência técnica especializada em eletrodomésticos.</span>
+              </span>
+              <span class="project-card-meta">
+                <span>Finalizado</span>
+                <span>2025</span>
+                <span>Site institucional</span>
+                <span>HTML · CSS · JavaScript</span>
+              </span>
+              <span class="project-card-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li class="project-item">
+            <a class="project-card" href="https://github.com/ThurStelzner/FalaiSA" target="_blank" rel="noopener" data-project="falai">
+              <span class="project-card-index" aria-hidden="true">03</span>
+              <span class="project-card-main">
+                <span class="project-card-name">SA:<br>Falaí</span>
+                <span class="project-card-desc">Situação de Aprendizagem do Sesi Senai Sul de Joinville, unindo lógica, banco de dados e web.</span>
+              </span>
+              <span class="project-card-meta">
+                <span>Finalizado</span>
+                <span>2025</span>
+                <span>Projeto acadêmico</span>
+                <span>Python · MySQL · HTML/CSS</span>
+              </span>
+              <span class="project-card-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="overlay case-study" id="case-study" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="case-title">
+    <button class="btn-back" type="button" aria-label="Voltar para projetos" data-close-overlay>
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </button>
+
+    <div class="overlay-scroll">
+      <div class="case-container">
+        <div class="case-head">
+          <p class="case-kicker" id="case-kicker">Projeto — 01</p>
+          <h2 class="case-title" id="case-title"></h2>
+        </div>
+
+        <div class="case-body">
+          <div class="case-summary">
+            <p id="case-description"></p>
+            <a class="arrow-link" id="case-link" href="#" target="_blank" rel="noopener">Ver no GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+
+          <aside class="case-meta" aria-label="Detalhes do projeto">
+            <div><span class="label">Status</span><span id="case-status"></span></div>
+            <div><span class="label">Ano</span><span id="case-year"></span></div>
+            <div><span class="label">Tipo</span><span id="case-type"></span></div>
+            <div><span class="label">Stack</span><span id="case-stack"></span></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="night-mode">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5">
+  <meta name="description" content="Habilidades de Arthur I. Stelzner — linguagens, banco de dados, ferramentas, certificações e formação.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Aplica o tema salvo antes de qualquer pintura da página -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var root = document.documentElement;
+
+        if (stored === 'light-mode' || stored === 'night-mode') {
+          root.classList.remove('night-mode', 'light-mode');
+          root.classList.add(stored);
+        }
+
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.setAttribute('content', root.classList.contains('light-mode') ? '#f2f2f2' : '#000000');
+        }
+      } catch (error) {}
+    })();
+  </script>
+  <meta property="og:title" content="Habilidades — Arthur I. Stelzner">
+  <meta property="og:description" content="Stack, certificações e formação de Arthur I. Stelzner.">
+  <meta property="og:type" content="website">
+  <title>Habilidades — Arthur I. Stelzner</title>
+
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <!-- Primeira pintura: fundo do tema + cortina opaca, sem flash de conteúdo cru -->
+  <style>
+    html { background-color: #000; }
+    html.light-mode { background-color: #f2f2f2; }
+    .curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background-color: #000;
+    }
+    html.light-mode .curtain { background-color: #f2f2f2; }
+  </style>
+  <noscript>
+    <style>
+      .curtain { display: none !important; }
+      body { overflow: auto !important; height: auto !important; }
+    </style>
+  </noscript>
+</head>
+<body class="page skillsShow loading" data-page="skills">
+
+  <div class="curtain" aria-hidden="true"></div>
+
+  <!-- O cabeçalho não aparece nas páginas separadas: inert o mantém fora do foco e da leitura de tela. -->
+  <header class="ui" inert>
+    <a class="logo" href="index.html" aria-label="Arthur I. Stelzner — início">
+      <span class="slideUp"><span>Arthur</span></span>
+      <span class="slideUp"><span>I.</span></span>
+      <span class="slideUp"><span>Stelzner</span></span>
+      <span class="logo-role" aria-hidden="true">Desenvolvedor Full Stack</span>
+    </a>
+
+    <button class="mobile-nav" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="mobile-nav-box"><span class="mobile-nav-inner"></span></span>
+    </button>
+
+    <div class="info" id="menu-principal">
+      <div class="left">
+        <div class="contact">
+          <ul>
+            <li>Desenvolvedor Full Stack</li>
+            <li class="email"><a href="mailto:arthurstelzner@gmail.com"><strong>arthurstelzner@gmail.com</strong></a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="right">
+        <nav class="social" aria-label="Redes sociais">
+          <ul>
+            <li><a href="https://github.com/ThurStelzner?tab=repositories" target="_blank" rel="noopener"><span>01</span> <strong>github</strong></a></li>
+            <li><a href="https://www.linkedin.com/in/arthur-iantas-stelzner-867a392b5" target="_blank" rel="noopener"><span>02</span> <strong>linkedin</strong></a></li>
+            <li><a href="https://wa.me/47997092604" target="_blank" rel="noopener"><span>03</span> <strong>whatsapp</strong></a></li>
+          </ul>
+        </nav>
+
+        <button class="color-mode" type="button" data-mode="night" aria-label="Mudar para o tema claro" title="Mudar para o tema claro">
+          <span class="icon icon-moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
+            </svg>
+          </span>
+          <span class="icon icon-sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+              <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>
+              </g>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="copyright">© 2026 Arthur I. Stelzner. Todos os direitos reservados.</div>
+    </div>
+  </header>
+
+  <section class="overlay skills-panel is-open page-panel" id="habilidades" aria-labelledby="habilidades-titulo">
+    <a class="btn-back" href="index.html" aria-label="Voltar ao início">
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </a>
+
+    <div class="overlay-scroll">
+      <div class="skills-panel-container">
+        <header class="skills-panel-head">
+          <h2 class="skills-panel-title" id="habilidades-titulo">Habilidades</h2>
+          <p class="skills-panel-kicker">Stack · Certificações · Formação</p>
+        </header>
+
+        <div class="skills-panel-body">
+          <div class="skills-panel-main">
+            <div class="skills-block-head">
+              <h3 class="heading">Linguagens &amp; tecnologias</h3>
+              <span class="skills-block-note">Stack principal</span>
+            </div>
+
+            <div class="skills-groups">
+              <section class="skills-group">
+                <h4 class="skills-group-title">Back-end &amp; linguagens</h4>
+                <ul class="tech-list">
+                  <li>PHP</li>
+                  <li>Python</li>
+                  <li>Node.js</li>
+                  <li>JavaScript</li>
+                  <li>TypeScript</li>
+                  <li>C</li>
+                  <li>C++</li>
+                </ul>
+              </section>
+
+              <section class="skills-group">
+                <h4 class="skills-group-title">Banco de dados &amp; ferramentas</h4>
+                <ul class="tech-list">
+                  <li>MySQL</li>
+                  <li>Docker</li>
+                  <li>Git &amp; GitHub</li>
+                </ul>
+              </section>
+
+              <section class="skills-group">
+                <h4 class="skills-group-title">Front-end</h4>
+                <ul class="tech-list">
+                  <li>HTML5</li>
+                  <li>CSS3</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+
+          <aside class="skills-panel-side">
+            <div class="info">
+              <h5 class="heading">Cursos &amp; certificados</h5>
+              <h6 class="title">Cisco Networking Academy —</h6>
+              <ul>
+                <li>Introdução à Cibersegurança</li>
+                <li>Segurança de Endpoint</li>
+                <li>Defesa de Rede</li>
+              </ul>
+            </div>
+
+            <div class="info">
+              <h5 class="heading">Formação &amp; cursos</h5>
+              <h6 class="title">SENAI —</h6>
+              <ul>
+                <li>Técnico em Desenvolvimento de Sistemas</li>
+                <li>Circuitos Eletrônicos Automatizados</li>
+                <li>Produtividade e Difusão Tecnológica na Indústria</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

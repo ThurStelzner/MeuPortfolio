@@ -2,6 +2,74 @@
    Arthur I. Stelzner — portfólio
    ========================================================================== */
 
+/* Fontes hospedadas localmente: sem requisição ao Google, a página pinta e
+   fica interativa na hora (as fontes são pré-carregadas no HTML). */
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url(../assets/fonts/archivo-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url(../assets/fonts/archivo-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(../assets/fonts/inter-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../assets/fonts/inter-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(../assets/fonts/inter-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../assets/fonts/inter-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: swap;
+  src: url(../assets/fonts/inter-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 :root {
   --bg: #f2f2f2;
   --ink: #000;
@@ -25,6 +93,9 @@
   --ease-in-out: cubic-bezier(.755, .05, .855, .06);
   --ease-soft: cubic-bezier(.25, .46, .45, .94);
   --gutter: 60px;
+  /* Inclinação de repouso dos itens 3D — a entrada precisa terminar aqui
+     para não haver "pulo" quando o estado de intro é removido. */
+  --rest-rotate: -45deg;
 }
 
 html.night-mode {
@@ -700,7 +771,7 @@ body.mobileNavOpen .mobile-nav-inner::after {
 }
 
 .projectContainer {
-  transform: rotateY(-45deg) translateZ(0) scale(1);
+  transform: rotateY(var(--rest-rotate)) translateZ(0) scale(1);
   transform-origin: right center;
   transform-style: preserve-3d;
   will-change: transform;
@@ -825,20 +896,20 @@ body.caseShow .stagePerspective {
 
 body.intro .stage {
   transform: translate3d(0, -110%, 0);
-  animation: stage-in 2s var(--ease-out) forwards;
+  animation: stage-in 1s var(--ease-out) forwards;
 }
 
 body.intro .projectContainer {
   visibility: hidden;
-  animation: project-in 2s var(--ease-out) forwards;
+  animation: project-in .85s var(--ease-out) forwards;
 }
 
-body.intro .projectsLi:nth-child(1) .projectContainer { animation-delay: .9s; }
-body.intro .projectsLi:nth-child(2) .projectContainer { animation-delay: .8s; }
-body.intro .projectsLi:nth-child(3) .projectContainer { animation-delay: .7s; }
-body.intro .projectsLi:nth-child(4) .projectContainer { animation-delay: .6s; }
-body.intro .projectsLi:nth-child(5) .projectContainer { animation-delay: .5s; }
-body.intro .projectsLi:nth-child(6) .projectContainer { animation-delay: .4s; }
+body.intro .projectsLi:nth-child(1) .projectContainer { animation-delay: .3s; }
+body.intro .projectsLi:nth-child(2) .projectContainer { animation-delay: .25s; }
+body.intro .projectsLi:nth-child(3) .projectContainer { animation-delay: .2s; }
+body.intro .projectsLi:nth-child(4) .projectContainer { animation-delay: .15s; }
+body.intro .projectsLi:nth-child(5) .projectContainer { animation-delay: .1s; }
+body.intro .projectsLi:nth-child(6) .projectContainer { animation-delay: .05s; }
 
 body.intro:not(.aboutShow):not(.skillsShow):not(.experiencesShow):not(.projectsShow):not(.caseShow) {
   pointer-events: none;
@@ -858,7 +929,7 @@ body.intro:not(.aboutShow):not(.skillsShow):not(.experiencesShow):not(.projectsS
   100% {
     visibility: visible;
     opacity: 1;
-    transform: rotateY(-45deg) translateZ(0) scale(1);
+    transform: rotateY(var(--rest-rotate)) translateZ(0) scale(1);
   }
 }
 
@@ -922,6 +993,23 @@ body.outro .projectContainer {
 
 .overlay-scroll::-webkit-scrollbar {
   display: none;
+}
+
+/* Páginas separadas (sobre.html, projetos.html...): o painel principal vira
+   o conteúdo normal do documento, com rolagem padrão do navegador. */
+body.page .overlay.page-panel {
+  position: static;
+  overflow: visible;
+}
+
+body.page .overlay.page-panel .overlay-scroll {
+  position: static;
+  overflow: visible;
+}
+
+/* Nada do cabeçalho aparece nessas páginas: não deve capturar cliques. */
+body.page .ui {
+  pointer-events: none;
 }
 
 .btn-back {
@@ -2053,6 +2141,7 @@ html.night-mode .about .info a:hover {
 @media (max-width: 767px) {
   :root {
     --gutter: 30px;
+    --rest-rotate: -35deg;
   }
 
   body {
@@ -2123,7 +2212,7 @@ html.night-mode .about .info a:hover {
 
   body.intro .home-tagline {
     opacity: 0;
-    animation: fade-in 1s var(--ease-soft) 1.2s forwards;
+    animation: fade-in .5s var(--ease-soft) .7s forwards;
   }
 
   body.overlayOpen .home-tagline,
@@ -2327,7 +2416,7 @@ html.night-mode .about .info a:hover {
   }
 
   .projectContainer {
-    transform: rotateY(-35deg) translateZ(0);
+    transform: rotateY(var(--rest-rotate)) translateZ(0);
     transition: transform .8s var(--ease-out);
   }
 
@@ -2347,20 +2436,20 @@ html.night-mode .about .info a:hover {
   }
 
   body.intro .projectContainer {
-    animation-duration: 1.4s;
+    animation-duration: .85s;
   }
 
   body.intro .projectsLi:nth-child(1) .projectContainer { animation-delay: .3s; }
-  body.intro .projectsLi:nth-child(2) .projectContainer { animation-delay: .45s; }
-  body.intro .projectsLi:nth-child(3) .projectContainer { animation-delay: .6s; }
-  body.intro .projectsLi:nth-child(4) .projectContainer { animation-delay: .75s; }
+  body.intro .projectsLi:nth-child(2) .projectContainer { animation-delay: .25s; }
+  body.intro .projectsLi:nth-child(3) .projectContainer { animation-delay: .2s; }
+  body.intro .projectsLi:nth-child(4) .projectContainer { animation-delay: .15s; }
 
   .aboutShow .mobile-nav,
   .skillsShow .mobile-nav,
   .experiencesShow .mobile-nav,
   .projectsShow .mobile-nav,
   .caseShow .mobile-nav {
-    opacity: 0;
+    opacity: 0 !important;
     pointer-events: none;
     transform: translateX(20px);
     transition: opacity .25s ease, transform .25s ease;
@@ -2814,7 +2903,7 @@ html.night-mode .about .info a:hover {
   body.intro .projectContainer {
     opacity: 1;
     visibility: visible;
-    transform: rotateY(-45deg) translateZ(0);
+    transform: rotateY(var(--rest-rotate)) translateZ(0);
     animation: none !important;
   }
 

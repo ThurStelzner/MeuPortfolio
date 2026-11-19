@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="night-mode">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5">
+  <meta name="description" content="Sobre Arthur Iantas Stelzner — desenvolvedor full stack e vibe coder, criando aplicações web completas.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Aplica o tema salvo antes de qualquer pintura da página -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        var root = document.documentElement;
+
+        if (stored === 'light-mode' || stored === 'night-mode') {
+          root.classList.remove('night-mode', 'light-mode');
+          root.classList.add(stored);
+        }
+
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.setAttribute('content', root.classList.contains('light-mode') ? '#f2f2f2' : '#000000');
+        }
+      } catch (error) {}
+    })();
+  </script>
+  <meta property="og:title" content="Sobre — Arthur I. Stelzner">
+  <meta property="og:description" content="Desenvolvedor full stack e vibe coder — aplicações web completas, da lógica ao design.">
+  <meta property="og:type" content="website">
+  <title>Sobre — Arthur I. Stelzner</title>
+
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <!-- Primeira pintura: fundo do tema + cortina opaca, sem flash de conteúdo cru -->
+  <style>
+    html { background-color: #000; }
+    html.light-mode { background-color: #f2f2f2; }
+    .curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background-color: #000;
+    }
+    html.light-mode .curtain { background-color: #f2f2f2; }
+  </style>
+  <noscript>
+    <style>
+      .curtain { display: none !important; }
+      body { overflow: auto !important; height: auto !important; }
+    </style>
+  </noscript>
+</head>
+<body class="page aboutShow loading" data-page="about">
+
+  <div class="curtain" aria-hidden="true"></div>
+
+  <!-- O cabeçalho não aparece nas páginas separadas: inert o mantém fora do foco e da leitura de tela. -->
+  <header class="ui" inert>
+    <a class="logo" href="index.html" aria-label="Arthur I. Stelzner — início">
+      <span class="slideUp"><span>Arthur</span></span>
+      <span class="slideUp"><span>I.</span></span>
+      <span class="slideUp"><span>Stelzner</span></span>
+      <span class="logo-role" aria-hidden="true">Desenvolvedor Full Stack</span>
+    </a>
+
+    <button class="mobile-nav" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal">
+      <span class="mobile-nav-box"><span class="mobile-nav-inner"></span></span>
+    </button>
+
+    <div class="info" id="menu-principal">
+      <div class="left">
+        <div class="contact">
+          <ul>
+            <li>Desenvolvedor Full Stack</li>
+            <li class="email"><a href="mailto:arthurstelzner@gmail.com"><strong>arthurstelzner@gmail.com</strong></a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="right">
+        <nav class="social" aria-label="Redes sociais">
+          <ul>
+            <li><a href="https://github.com/ThurStelzner?tab=repositories" target="_blank" rel="noopener"><span>01</span> <strong>github</strong></a></li>
+            <li><a href="https://www.linkedin.com/in/arthur-iantas-stelzner-867a392b5" target="_blank" rel="noopener"><span>02</span> <strong>linkedin</strong></a></li>
+            <li><a href="https://wa.me/47997092604" target="_blank" rel="noopener"><span>03</span> <strong>whatsapp</strong></a></li>
+          </ul>
+        </nav>
+
+        <button class="color-mode" type="button" data-mode="night" aria-label="Mudar para o tema claro" title="Mudar para o tema claro">
+          <span class="icon icon-moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
+            </svg>
+          </span>
+          <span class="icon icon-sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+              <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                <path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>
+              </g>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="copyright">© 2026 Arthur I. Stelzner. Todos os direitos reservados.</div>
+    </div>
+  </header>
+
+  <section class="overlay about is-open page-panel" id="sobre" aria-labelledby="sobre-titulo">
+    <a class="btn-back" href="index.html" aria-label="Voltar ao início">
+      <span class="btn-box"><span class="icon-close"></span></span>
+    </a>
+
+    <div class="overlay-scroll">
+      <div class="container">
+        <div class="left">
+          <h2 class="heading" id="sobre-titulo">Desenvolvedor Full Stack, transformando ideias em interfaces com personalidade e precisão.</h2>
+          <p>Meu nome é Arthur Iantas Stelzner, desenvolvedor full stack e vibe coder. Crio aplicações web completas, unindo lógica, design e IA em cada projeto.</p>
+          <p>Sou apaixonado por tecnologia e tenho facilidade para aprender. Na rede Senai, desenvolvi projetos CRUD e Situações de Aprendizagem, colocando em prática tudo o que venho aprendendo ao longo do curso.</p>
+          <p>Hoje busco aprimorar minhas habilidades, explorar novas tecnologias e criar experiências digitais que unam design e código.</p>
+          <div class="about-cta">
+            <a class="arrow-link" href="mailto:arthurstelzner@gmail.com">Vamos conversar <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="info">
+            <h5 class="heading">Disponibilidade</h5>
+            <h6 class="title">Estágio &amp; projetos —</h6>
+            <p>Aberto a oportunidades</p>
+            <p>Remoto</p>
+          </div>
+
+          <div class="info">
+            <h5 class="heading">Contato</h5>
+            <h6 class="title">Fale comigo —</h6>
+            <ul>
+              <li><a href="mailto:arthurstelzner@gmail.com">arthurstelzner@gmail.com</a></li>
+              <li><a href="https://wa.me/47997092604" target="_blank" rel="noopener">+55 47 99709-2604</a></li>
+              <li><a href="https://github.com/ThurStelzner" target="_blank" rel="noopener">github.com/ThurStelzner</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

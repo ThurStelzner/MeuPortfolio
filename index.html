@@ -30,11 +30,22 @@
   <meta property="og:type" content="website">
   <title>Arthur I. Stelzner — Desenvolvedor Full Stack</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <!-- Primeira pintura: fundo do tema + cortina opaca, sem flash de conteúdo cru -->
+  <style>
+    html { background-color: #000; }
+    html.light-mode { background-color: #f2f2f2; }
+    .curtain {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background-color: #000;
+    }
+    html.light-mode .curtain { background-color: #f2f2f2; }
+  </style>
   <noscript>
     <style>
       .curtain { display: none !important; }
@@ -63,44 +74,6 @@
       .ui .links li,
       .ui .social li { opacity: 1 !important; transform: none !important; }
       .mobile-nav { display: none !important; }
-      .case-study { display: none !important; }
-      .experience-detail { display: none !important; }
-
-      .about,
-      .projects-panel,
-      .skills-panel,
-      .experiences-panel {
-        display: block !important;
-        position: static !important;
-        overflow: visible !important;
-        height: auto !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        pointer-events: auto !important;
-      }
-
-      .about .btn-back,
-      .projects-panel .btn-back,
-      .skills-panel .btn-back,
-      .experiences-panel .btn-back { display: none !important; }
-
-      .about .overlay-scroll,
-      .projects-panel .overlay-scroll,
-      .skills-panel .overlay-scroll,
-      .experiences-panel .overlay-scroll {
-        position: static !important;
-        height: auto !important;
-        padding: 8vw 5vw !important;
-        overflow: visible !important;
-      }
-
-      .about .container,
-      .projects-panel-container,
-      .skills-panel-container,
-      .experiences-panel-container {
-        opacity: 1 !important;
-        transform: none !important;
-      }
 
       @media (max-width: 767px) {
         .ui {
@@ -134,7 +107,7 @@
     </style>
   </noscript>
 </head>
-<body class="home-page loading intro">
+<body class="home-page loading">
 
   <div class="curtain" aria-hidden="true"></div>
 
@@ -199,322 +172,28 @@
         <ul class="projects" aria-label="Navegação principal">
           <li class="projectsLi">
             <div class="projectContainer">
-              <a href="#sobre" data-open-about data-info="01 — perfil" data-year="01">Sobre</a>
+              <a href="sobre.html" data-info="01 — perfil" data-year="01">Sobre</a>
             </div>
           </li>
           <li class="projectsLi">
             <div class="projectContainer">
-              <a href="#projetos" data-open-projects data-info="02 — trabalhos" data-year="02">Projetos</a>
+              <a href="projetos.html" data-info="02 — trabalhos" data-year="02">Projetos</a>
             </div>
           </li>
           <li class="projectsLi projectsLi--wide">
             <div class="projectContainer">
-              <a href="#habilidades" data-open-skills data-info="03 — técnico" data-year="03">Habilidades</a>
+              <a href="habilidades.html" data-info="03 — técnico" data-year="03">Habilidades</a>
             </div>
           </li>
           <li class="projectsLi projectsLi--compact">
             <div class="projectContainer">
-              <a href="#experiencias" data-open-experiences data-info="04 — eventos" data-year="04">Experiências</a>
+              <a href="experiencias.html" data-info="04 — eventos" data-year="04">Experiências</a>
             </div>
           </li>
         </ul>
       </main>
     </div>
   </div>
-
-  <section class="overlay about" id="sobre" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="sobre-titulo">
-    <button class="btn-back" type="button" aria-label="Fechar sobre" data-close-overlay>
-      <span class="btn-box"><span class="icon-close"></span></span>
-    </button>
-
-    <div class="overlay-scroll">
-      <div class="container">
-        <div class="left">
-          <h2 class="heading" id="sobre-titulo">Desenvolvedor Full Stack, transformando ideias em interfaces com personalidade e precisão.</h2>
-          <p>Meu nome é Arthur Iantas Stelzner, desenvolvedor full stack e vibe coder. Crio aplicações web completas, unindo lógica, design e IA em cada projeto.</p>
-          <p>Sou apaixonado por tecnologia e tenho facilidade para aprender. Na rede Senai, desenvolvi projetos CRUD e Situações de Aprendizagem, colocando em prática tudo o que venho aprendendo ao longo do curso.</p>
-          <p>Hoje busco aprimorar minhas habilidades, explorar novas tecnologias e criar experiências digitais que unam design e código.</p>
-          <div class="about-cta">
-            <a class="arrow-link" href="mailto:arthurstelzner@gmail.com">Vamos conversar <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-
-        <div class="right">
-          <div class="info">
-            <h5 class="heading">Disponibilidade</h5>
-            <h6 class="title">Estágio &amp; projetos —</h6>
-            <p>Aberto a oportunidades</p>
-            <p>Remoto</p>
-          </div>
-
-          <div class="info">
-            <h5 class="heading">Contato</h5>
-            <h6 class="title">Fale comigo —</h6>
-            <ul>
-              <li><a href="mailto:arthurstelzner@gmail.com">arthurstelzner@gmail.com</a></li>
-              <li><a href="https://wa.me/47997092604" target="_blank" rel="noopener">+55 47 99709-2604</a></li>
-              <li><a href="https://github.com/ThurStelzner" target="_blank" rel="noopener">github.com/ThurStelzner</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="overlay skills-panel" id="habilidades" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="habilidades-titulo">
-    <button class="btn-back" type="button" aria-label="Fechar habilidades" data-close-overlay>
-      <span class="btn-box"><span class="icon-close"></span></span>
-    </button>
-
-    <div class="overlay-scroll">
-      <div class="skills-panel-container">
-        <header class="skills-panel-head">
-          <h2 class="skills-panel-title" id="habilidades-titulo">Habilidades</h2>
-          <p class="skills-panel-kicker">Stack · Certificações · Formação</p>
-        </header>
-
-        <div class="skills-panel-body">
-          <div class="skills-panel-main">
-            <div class="skills-block-head">
-              <h3 class="heading">Linguagens &amp; tecnologias</h3>
-              <span class="skills-block-note">Stack principal</span>
-            </div>
-
-            <div class="skills-groups">
-              <section class="skills-group">
-                <h4 class="skills-group-title">Back-end &amp; linguagens</h4>
-                <ul class="tech-list">
-                  <li>PHP</li>
-                  <li>Python</li>
-                  <li>Node.js</li>
-                  <li>JavaScript</li>
-                  <li>TypeScript</li>
-                  <li>C</li>
-                  <li>C++</li>
-                </ul>
-              </section>
-
-              <section class="skills-group">
-                <h4 class="skills-group-title">Banco de dados &amp; ferramentas</h4>
-                <ul class="tech-list">
-                  <li>MySQL</li>
-                  <li>Docker</li>
-                  <li>Git &amp; GitHub</li>
-                </ul>
-              </section>
-
-              <section class="skills-group">
-                <h4 class="skills-group-title">Front-end</h4>
-                <ul class="tech-list">
-                  <li>HTML5</li>
-                  <li>CSS3</li>
-                </ul>
-              </section>
-            </div>
-          </div>
-
-          <aside class="skills-panel-side">
-            <div class="info">
-              <h5 class="heading">Cursos &amp; certificados</h5>
-              <h6 class="title">Cisco Networking Academy —</h6>
-              <ul>
-                <li>Introdução à Cibersegurança</li>
-                <li>Segurança de Endpoint</li>
-                <li>Defesa de Rede</li>
-              </ul>
-            </div>
-
-            <div class="info">
-              <h5 class="heading">Formação &amp; cursos</h5>
-              <h6 class="title">SENAI —</h6>
-              <ul>
-                <li>Técnico em Desenvolvimento de Sistemas</li>
-                <li>Circuitos Eletrônicos Automatizados</li>
-                <li>Produtividade e Difusão Tecnológica na Indústria</li>
-              </ul>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="overlay experiences-panel" id="experiencias" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="experiencias-titulo">
-    <button class="btn-back" type="button" aria-label="Fechar experiências" data-close-overlay>
-      <span class="btn-box"><span class="icon-close"></span></span>
-    </button>
-
-    <div class="overlay-scroll">
-      <div class="experiences-panel-container">
-        <header class="experiences-panel-head">
-          <h2 class="experiences-panel-title" id="experiencias-titulo">Experiências</h2>
-          <p class="experiences-panel-kicker">Eventos · Reconhecimentos</p>
-        </header>
-
-        <div class="experience-list">
-          <article class="experience-item">
-            <span class="experience-index" aria-hidden="true">01</span>
-            <div class="experience-main">
-              <h3 class="experience-name">WorldSkills</h3>
-              <p class="experience-role">Recomendação — Sesi Senai</p>
-              <p class="experience-desc">Recomendação do Sesi Senai para o WorldSkills, a maior competição de educação profissional do mundo, reconhecendo o desempenho técnico e a dedicação ao longo do curso de Desenvolvimento de Sistemas.</p>
-            </div>
-            <div class="experience-side">
-              <div class="experience-meta">
-                <span>Recomendação</span>
-                <span>Sesi Senai</span>
-                <span>Competição internacional</span>
-              </div>
-              <button class="experience-more" type="button" data-experience="worldskills">
-                Veja mais <span aria-hidden="true">↗</span>
-              </button>
-            </div>
-          </article>
-
-          <article class="experience-item">
-            <span class="experience-index" aria-hidden="true">02</span>
-            <div class="experience-main">
-              <h3 class="experience-name">JEDI</h3>
-              <p class="experience-role">Participação — Join.Valle</p>
-              <p class="experience-desc">Participação no JEDI — Jornada de Empreendedorismo, Desenvolvimento e Inovação, programa do Join.Valle que conecta estudantes e profissionais a desafios reais de inovação em Joinville.</p>
-            </div>
-            <div class="experience-side">
-              <div class="experience-meta">
-                <span>Participação</span>
-                <span>Join.Valle</span>
-                <span>Joinville · SC</span>
-              </div>
-              <button class="experience-more" type="button" data-experience="jedi">
-                Veja mais <span aria-hidden="true">↗</span>
-              </button>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="overlay experience-detail" id="experiencia-detalhe" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="experiencia-titulo">
-    <button class="btn-back" type="button" aria-label="Voltar para experiências" data-close-overlay>
-      <span class="btn-box"><span class="icon-close"></span></span>
-    </button>
-
-    <div class="overlay-scroll">
-      <div class="experience-detail-container">
-        <header class="experience-detail-head">
-          <p class="experience-detail-kicker" id="experiencia-kicker"></p>
-          <h2 class="experience-detail-title" id="experiencia-titulo"></h2>
-          <p class="experience-detail-role" id="experiencia-role"></p>
-        </header>
-
-        <div class="experience-detail-body">
-          <div class="experience-detail-story">
-            <p class="experience-detail-lead" id="experiencia-lead"></p>
-            <div class="experience-detail-text" id="experiencia-texto"></div>
-          </div>
-
-          <div class="experience-detail-photos" id="experiencia-fotos" hidden></div>
-
-          <aside class="experience-detail-meta" id="experiencia-meta" aria-label="Detalhes da experiência"></aside>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="overlay projects-panel" id="projetos" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="projetos-titulo">
-    <button class="btn-back" type="button" aria-label="Fechar projetos" data-close-overlay>
-      <span class="btn-box"><span class="icon-close"></span></span>
-    </button>
-
-    <div class="overlay-scroll">
-      <div class="projects-panel-container">
-        <header class="projects-panel-head">
-          <h2 class="projects-panel-title" id="projetos-titulo">Projetos</h2>
-          <p class="projects-panel-kicker">Selecionados — 2025</p>
-        </header>
-
-        <ul class="project-list">
-          <li class="project-item">
-            <a class="project-card" href="https://github.com/ThurStelzner/PetAlliance" target="_blank" rel="noopener" data-project="petalliance">
-              <span class="project-card-index" aria-hidden="true">01</span>
-              <span class="project-card-main">
-                <span class="project-card-name">Pet<br>Alliance</span>
-                <span class="project-card-desc">Aplicativo para criadores de animais, com informações, cuidados e acompanhamento em um só lugar.</span>
-              </span>
-              <span class="project-card-meta">
-                <span>Em desenvolvimento</span>
-                <span>2025</span>
-                <span>Aplicativo</span>
-                <span>Python · MySQL</span>
-              </span>
-              <span class="project-card-arrow" aria-hidden="true">↗</span>
-            </a>
-          </li>
-          <li class="project-item">
-            <a class="project-card" href="https://github.com/ThurStelzner/VitrineGMM" target="_blank" rel="noopener" data-project="vitrine">
-              <span class="project-card-index" aria-hidden="true">02</span>
-              <span class="project-card-main">
-                <span class="project-card-name">Vitrine<br>GMM</span>
-                <span class="project-card-desc">Vitrine digital para a GMM Refrigeração, assistência técnica especializada em eletrodomésticos.</span>
-              </span>
-              <span class="project-card-meta">
-                <span>Finalizado</span>
-                <span>2025</span>
-                <span>Site institucional</span>
-                <span>HTML · CSS · JavaScript</span>
-              </span>
-              <span class="project-card-arrow" aria-hidden="true">↗</span>
-            </a>
-          </li>
-          <li class="project-item">
-            <a class="project-card" href="https://github.com/ThurStelzner/FalaiSA" target="_blank" rel="noopener" data-project="falai">
-              <span class="project-card-index" aria-hidden="true">03</span>
-              <span class="project-card-main">
-                <span class="project-card-name">SA:<br>Falaí</span>
-                <span class="project-card-desc">Situação de Aprendizagem do Sesi Senai Sul de Joinville, unindo lógica, banco de dados e web.</span>
-              </span>
-              <span class="project-card-meta">
-                <span>Finalizado</span>
-                <span>2025</span>
-                <span>Projeto acadêmico</span>
-                <span>Python · MySQL · HTML/CSS</span>
-              </span>
-              <span class="project-card-arrow" aria-hidden="true">↗</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="overlay case-study" id="case-study" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="case-title">
-    <button class="btn-back" type="button" aria-label="Fechar projeto" data-close-overlay>
-      <span class="btn-box"><span class="icon-close"></span></span>
-    </button>
-
-    <div class="overlay-scroll">
-      <div class="case-container">
-        <div class="case-head">
-          <p class="case-kicker" id="case-kicker">Projeto — 01</p>
-          <h2 class="case-title" id="case-title"></h2>
-        </div>
-
-        <div class="case-body">
-          <div class="case-summary">
-            <p id="case-description"></p>
-            <a class="arrow-link" id="case-link" href="#" target="_blank" rel="noopener">Ver no GitHub <span aria-hidden="true">↗</span></a>
-          </div>
-
-          <aside class="case-meta" aria-label="Detalhes do projeto">
-            <div><span class="label">Status</span><span id="case-status"></span></div>
-            <div><span class="label">Ano</span><span id="case-year"></span></div>
-            <div><span class="label">Tipo</span><span id="case-type"></span></div>
-            <div><span class="label">Stack</span><span id="case-stack"></span></div>
-          </aside>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <script src="js/app.js"></script>
 </body>
